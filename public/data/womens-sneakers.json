@@ -7,6 +7,19 @@
   "currency": "TWD",
   "rating": 4.7,
   "reviewsCount": 326,
+  "seller": {
+    "name": "AthleX 官方直營",
+    "rating": 4.8,
+    "followers": 12800,
+    "shipSpeed": "24h 出貨"
+  },
+  "promotions": {
+    "discountPercent": 12,
+    "discountStartDate": "2024-12-15",
+    "discountEndDate": "2024-12-31",
+    "coupon": "滿 2000 折 200",
+    "installment": "6 期 0 利率"
+  },
   "specs": {
     "鞋面": "工程網布 + 熱熔 TPU",
     "中底": "EVA 發泡 + 回彈核心",
@@ -48,24 +61,62 @@
   "descriptionDelta": {
     "ops": [
       { "insert": "AeroFit 女用輕量跑鞋\n", "attributes": { "header": 2 } },
-      { "insert": "為女性跑者設計，兼顧輕量、回彈與支撐。\n\n" },
-      { "insert": "特色亮點\n", "attributes": { "bold": true } },
-      { "insert": "\n" },
-      { "insert": "• 透氣鞋面：", "attributes": { "bold": true } },
-      { "insert": "工程網布提供高效散熱，長時間穿著依然乾爽。\n" },
-      { "insert": "• 彈性中底：", "attributes": { "bold": true } },
-      { "insert": "EVA 發泡與回彈核心，提升步伐推進。\n" },
-      { "insert": "• 抓地大底：", "attributes": { "bold": true } },
-      { "insert": "耐磨橡膠搭配紋路設計，濕地依然穩定。\n\n" },
-      { "insert": "使用建議\n", "attributes": { "bold": true } },
-      { "insert": "\n" },
-      { "insert": "慢跑、輕度間歇、健身課程與日常通勤皆適用。\n\n" },
-      { "insert": "保養方式\n", "attributes": { "bold": true } },
-      { "insert": "\n" },
-      { "insert": "建議以中性清潔劑手洗，自然陰乾，避免曝曬。\n" }
+      { "insert": "專為都會女性打造的全方位運動鞋，融合時尚設計與專業運動科技，無論是晨跑健身或日常穿搭都能完美駕馭。\n\n" },
+
+      { "insert": "革新科技，極致體驗\n", "attributes": { "header": 3 } },
+      { "insert": "採用最新一代", "attributes": { "bold": true } },
+      { "insert": "AeroLite™ 輕量化技術" },
+      { "insert": "，突破傳統運動鞋的重量限制。每雙鞋僅重約 210 公克，相當於一顆蘋果的重量，讓您的每一步都輕盈如風。\n\n" },
+
+      { "insert": "透氣設計，全天舒適\n", "attributes": { "header": 3 } },
+      { "insert": "鞋面採用", "attributes": { "bold": true } },
+      { "insert": "3D 工程網布" },
+      { "insert": "結合", "attributes": { "bold": true } },
+      { "insert": "熱熔 TPU 支撐片" },
+      { "insert": "，創造出 360 度透氣系統。即使在高強度運動中，也能保持足部乾爽舒適，有效減少細菌滋生和異味產生。\n\n" },
+
+      { "insert": "彈性回饋，動力無限\n", "attributes": { "header": 3 } },
+      { "insert": "中底搭載", "attributes": { "bold": true } },
+      { "insert": "StrideLab 專利回彈核心" },
+      { "insert": "，結合 EVA 發泡材質，提供高達", "attributes": { "bold": true } },
+      { "insert": "75% 能量回饋率" },
+      { "insert": "。每一步著地都能獲得強勁的推進力，讓跑步變得更加輕鬆省力。\n\n" },
+
+      { "insert": "抓地穩定，安心邁進\n", "attributes": { "header": 3 } },
+      { "insert": "大底採用", "attributes": { "bold": true } },
+      { "insert": "耐磨橡膠配方" },
+      { "insert": "，搭配獨特的", "attributes": { "bold": true } },
+      { "insert": "多向抓地紋路設計" },
+      { "insert": "。無論在乾燥或濕滑的路面上，都能提供卓越的抓地力和穩定性，讓您安心探索每一條路徑。\n\n" },
+
+      { "insert": "多場景應用\n", "attributes": { "header": 3 } },
+      { "insert": "• ", "attributes": { "bold": true } },
+      { "insert": "晨跑健身：", "attributes": { "bold": true } },
+      { "insert": "輕量設計減少足部負擔，回彈中底提供持久動力\n" },
+      { "insert": "• ", "attributes": { "bold": true } },
+      { "insert": "健身房訓練：", "attributes": { "bold": true } },
+      { "insert": "穩定支撐適合多向運動，透氣材質保持舒適\n" },
+      { "insert": "• ", "attributes": { "bold": true } },
+      { "insert": "日常通勤：", "attributes": { "bold": true } },
+      { "insert": "時尚外觀搭配舒適體驗，完美融入都市生活\n\n" },
+
+      { "insert": "專業保養建議\n", "attributes": { "header": 3 } },
+      { "insert": "為了延長鞋子的使用壽命，建議：\n" },
+      { "insert": "1. 使用溫和的中性清潔劑進行清洗\n" },
+      { "insert": "2. 避免使用漂白劑或強酸性清潔用品\n" },
+      { "insert": "3. 清洗後請置於通風陰涼處自然風乾\n" },
+      { "insert": "4. 避免陽光直射或使用烘乾機\n" },
+      { "insert": "5. 不穿時可使用鞋撐維持鞋型\n\n" },
+
+      { "insert": "品質保證\n", "attributes": { "header": 3 } },
+      { "insert": "所有 StrideLab 產品均通過", "attributes": { "bold": true } },
+      { "insert": "國際品質認證" },
+      { "insert": "，提供", "attributes": { "bold": true } },
+      { "insert": "6 個月品質保固" },
+      { "insert": "。我們致力於為每位顧客提供最優質的產品和服務體驗。\n" }
     ]
   },
-  "shipping": { "freeThreshold": 999, "fee": 60, "shipFrom": "台北" },
-  "policies": { "return": "收到貨 7 天內可退換（不影響二次銷售）", "warranty": "6 個月（非人為瑕疵）" }
+  "shipping": { "freeThreshold": 999, "fee": 60, "shipFrom": "台北", "etaDays": "2–3 天" },
+  "policies": { "return": "收到貨 7 天內可退換（不影響二次銷售）", "warranty": "6 個月（非人為瑕疵）" },
+  "guarantees": ["七天鑑賞期", "正品保證", "快速出貨"]
 }
-
