@@ -1,11 +1,23 @@
-<script setup></script>
+<script setup>
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <div>
+    <header class="border-b bg-white/70 backdrop-blur sticky top-0 z-10">
+      <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <router-link to="/menu" class="text-lg font-semibold">AthleX</router-link>
+        <nav class="flex items-center gap-4 text-sm">
+          <router-link to="/menu" class="hover:text-rose-600">選單</router-link>
+          <router-link to="/shop" class="hover:text-rose-600">商品</router-link>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <router-view />
+    </main>
+  </div>
+  
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>

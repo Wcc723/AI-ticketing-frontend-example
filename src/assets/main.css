@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+/* v4 推薦：以 CSS 變數與 @theme 擴充（可選） */
+:root {
+  --brand: #ef4444;
+}

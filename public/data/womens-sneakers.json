@@ -1,0 +1,71 @@
+{
+  "id": "ws-001",
+  "name": "AeroFit 女用輕量跑鞋",
+  "brand": "StrideLab",
+  "category": "女用運動鞋",
+  "price": 2680,
+  "currency": "TWD",
+  "rating": 4.7,
+  "reviewsCount": 326,
+  "specs": {
+    "鞋面": "工程網布 + 熱熔 TPU",
+    "中底": "EVA 發泡 + 回彈核心",
+    "大底": "耐磨橡膠 (抓地紋路)",
+    "落差": "6 mm",
+    "重量": "約 210 g (US 7)",
+    "適用": "慢跑、健身、有氧訓練"
+  },
+  "variants": {
+    "color": ["黑/玫瑰金", "晨霧白", "海鹽藍"],
+    "size": ["US 5", "US 5.5", "US 6", "US 6.5", "US 7", "US 7.5", "US 8"]
+  },
+  "tags": ["輕量", "透氣", "慢跑", "健身房", "緩震", "城市通勤"],
+  "inventory": [
+    { "sku": "WS-001-BR-5",   "color": "黑/玫瑰金", "size": "US 5",   "stock": 8 },
+    { "sku": "WS-001-BR-55",  "color": "黑/玫瑰金", "size": "US 5.5", "stock": 10 },
+    { "sku": "WS-001-BR-6",   "color": "黑/玫瑰金", "size": "US 6",   "stock": 6 },
+    { "sku": "WS-001-BR-65",  "color": "黑/玫瑰金", "size": "US 6.5", "stock": 5 },
+    { "sku": "WS-001-BR-7",   "color": "黑/玫瑰金", "size": "US 7",   "stock": 0 },
+    { "sku": "WS-001-BR-75",  "color": "黑/玫瑰金", "size": "US 7.5", "stock": 3 },
+    { "sku": "WS-001-BR-8",   "color": "黑/玫瑰金", "size": "US 8",   "stock": 2 },
+
+    { "sku": "WS-001-WH-5",   "color": "晨霧白",   "size": "US 5",   "stock": 4 },
+    { "sku": "WS-001-WH-55",  "color": "晨霧白",   "size": "US 5.5", "stock": 6 },
+    { "sku": "WS-001-WH-6",   "color": "晨霧白",   "size": "US 6",   "stock": 10 },
+    { "sku": "WS-001-WH-65",  "color": "晨霧白",   "size": "US 6.5", "stock": 7 },
+    { "sku": "WS-001-WH-7",   "color": "晨霧白",   "size": "US 7",   "stock": 5 },
+    { "sku": "WS-001-WH-75",  "color": "晨霧白",   "size": "US 7.5", "stock": 2 },
+    { "sku": "WS-001-WH-8",   "color": "晨霧白",   "size": "US 8",   "stock": 1 },
+
+    { "sku": "WS-001-BL-5",   "color": "海鹽藍",   "size": "US 5",   "stock": 2 },
+    { "sku": "WS-001-BL-55",  "color": "海鹽藍",   "size": "US 5.5", "stock": 4 },
+    { "sku": "WS-001-BL-6",   "color": "海鹽藍",   "size": "US 6",   "stock": 0 },
+    { "sku": "WS-001-BL-65",  "color": "海鹽藍",   "size": "US 6.5", "stock": 0 },
+    { "sku": "WS-001-BL-7",   "color": "海鹽藍",   "size": "US 7",   "stock": 6 },
+    { "sku": "WS-001-BL-75",  "color": "海鹽藍",   "size": "US 7.5", "stock": 6 },
+    { "sku": "WS-001-BL-8",   "color": "海鹽藍",   "size": "US 8",   "stock": 4 }
+  ],
+  "descriptionDelta": {
+    "ops": [
+      { "insert": "AeroFit 女用輕量跑鞋\n", "attributes": { "header": 2 } },
+      { "insert": "為女性跑者設計，兼顧輕量、回彈與支撐。\n\n" },
+      { "insert": "特色亮點\n", "attributes": { "bold": true } },
+      { "insert": "\n" },
+      { "insert": "• 透氣鞋面：", "attributes": { "bold": true } },
+      { "insert": "工程網布提供高效散熱，長時間穿著依然乾爽。\n" },
+      { "insert": "• 彈性中底：", "attributes": { "bold": true } },
+      { "insert": "EVA 發泡與回彈核心，提升步伐推進。\n" },
+      { "insert": "• 抓地大底：", "attributes": { "bold": true } },
+      { "insert": "耐磨橡膠搭配紋路設計，濕地依然穩定。\n\n" },
+      { "insert": "使用建議\n", "attributes": { "bold": true } },
+      { "insert": "\n" },
+      { "insert": "慢跑、輕度間歇、健身課程與日常通勤皆適用。\n\n" },
+      { "insert": "保養方式\n", "attributes": { "bold": true } },
+      { "insert": "\n" },
+      { "insert": "建議以中性清潔劑手洗，自然陰乾，避免曝曬。\n" }
+    ]
+  },
+  "shipping": { "freeThreshold": 999, "fee": 60, "shipFrom": "台北" },
+  "policies": { "return": "收到貨 7 天內可退換（不影響二次銷售）", "warranty": "6 個月（非人為瑕疵）" }
+}
+
