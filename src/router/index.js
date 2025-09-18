@@ -20,6 +20,11 @@ const router = createRouter({
       component: () => import('@/views/Shop-Claude.vue'),
     },
     {
+      path: '/shop-gemini',
+      name: 'shop-gemini',
+      component: () => import('@/views/Shop-Gemini.vue'),
+    },
+    {
       path: '/event',
       name: 'event',
       component: () => import('@/views/Event.vue'),

@@ -24,6 +24,10 @@
                 class="block w-full text-center px-4 py-2 bg-gradient-to-r from-rose-500 to-pink-500 text-white rounded-lg hover:from-rose-600 hover:to-pink-600 transition-all text-sm font-medium">
                 Claude 精選版
               </router-link>
+              <router-link to="/shop-gemini"
+                class="block w-full text-center px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-lg hover:from-blue-600 hover:to-indigo-600 transition-all text-sm font-medium">
+                Gemini 體驗版
+              </router-link>
             </div>
           </div>
         </div>
