@@ -243,42 +243,10 @@ const isFull = computed(() => event.value?.capacity?.remaining <= 0)
             <div class="p-6">
               <!-- 活動資訊 -->
               <div v-show="activeTab === 'info'" class="space-y-8">
+                <!-- 活動介紹 -->
                 <div>
-                  <h3 class="text-lg font-semibold text-gray-900 mb-3">活動介紹</h3>
-                  <p class="text-gray-700 leading-relaxed mb-4">{{ event.description.brief }}</p>
-
-                  <div class="space-y-3">
-                    <div v-for="highlight in event.description.highlights" :key="highlight"
-                         class="flex items-start space-x-3 p-3 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-100">
-                      <span class="text-lg">{{ highlight.split(' ')[0] }}</span>
-                      <span class="text-gray-700 text-sm">{{ highlight.substring(highlight.indexOf(' ') + 1) }}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- 深度體驗內容 -->
-                <div class="space-y-6">
-                  <div v-for="(content, key) in event.description.deepDive" :key="key" class="border-l-4 border-indigo-500 pl-6">
-                    <h4 class="text-lg font-semibold text-gray-900 mb-2 capitalize">{{
-                      key === 'technology' ? '突破性技術' :
-                      key === 'experience' ? '沉浸式體驗' :
-                      key === 'innovation' ? '創新里程碑' :
-                      key === 'future' ? '未來展望' : key
-                    }}</h4>
-                    <div class="prose prose-sm max-w-none text-gray-700 leading-relaxed" v-html="content"></div>
-                  </div>
-                </div>
-
-                <!-- 獨家功能 -->
-                <div>
-                  <h3 class="text-lg font-semibold text-gray-900 mb-4">獨家技術特色</h3>
-                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div v-for="feature in event.description.exclusiveFeatures" :key="feature.title"
-                         class="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
-                      <h4 class="font-semibold text-gray-900 mb-2">{{ feature.title }}</h4>
-                      <div class="prose prose-sm max-w-none text-gray-700 text-sm leading-relaxed" v-html="feature.description"></div>
-                    </div>
-                  </div>
+                  <h3 class="text-lg font-semibold text-gray-900 mb-4">活動介紹</h3>
+                  <div class="prose prose-sm max-w-none text-gray-700 leading-relaxed" v-html="event.description"></div>
                 </div>
 
                 <div>
@@ -310,48 +278,23 @@ const isFull = computed(() => event.value?.capacity?.remaining <= 0)
                   </div>
                 </div>
 
-                <!-- 體驗包含內容 -->
-                <div>
-                  <h3 class="text-lg font-semibold text-gray-900 mb-4">體驗包含內容</h3>
-                  <div class="grid grid-cols-1 gap-3">
-                    <div v-for="item in event.pricing.included" :key="item"
-                         class="flex items-start space-x-3 p-3 bg-green-50 rounded-lg border border-green-200">
-                      <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                      </svg>
-                      <div class="prose prose-sm max-w-none text-gray-700 text-sm" v-html="item"></div>
-                    </div>
-                  </div>
-                </div>
 
                 <!-- 參與要求 -->
                 <div>
                   <h3 class="text-lg font-semibold text-gray-900 mb-4">參與要求</h3>
-                  <div class="bg-amber-50 rounded-xl p-4 border border-amber-200">
-                    <div class="prose prose-sm max-w-none text-gray-700" v-html="event.requirements"></div>
-                  </div>
+                  <div class="prose prose-sm max-w-none text-gray-700" v-html="event.requirements"></div>
                 </div>
 
                 <!-- FAQ 常見問題 -->
                 <div>
                   <h3 class="text-lg font-semibold text-gray-900 mb-4">常見問題</h3>
-                  <div class="space-y-4">
-                    <div v-for="faq in event.faq" :key="faq.question"
-                         class="border border-gray-200 rounded-xl overflow-hidden">
-                      <div class="bg-gray-50 px-4 py-3 border-b border-gray-200">
-                        <div class="prose prose-sm max-w-none font-medium text-gray-900 text-sm" v-html="faq.question"></div>
-                      </div>
-                      <div class="px-4 py-3">
-                        <div class="prose prose-sm max-w-none text-gray-700 text-sm leading-relaxed" v-html="faq.answer"></div>
-                      </div>
-                    </div>
-                  </div>
+                  <div class="prose prose-sm max-w-none text-gray-700" v-html="event.faq"></div>
                 </div>
               </div>
 
 
               <!-- 學員評價 -->
-              <div v-show="activeTab === 'reviews'" class="space-y-6">
+              <div v-show="activeTab === 'reviews'" id="content" class="space-y-6">
                 <h3 class="text-lg font-semibold text-gray-900">學員心得分享</h3>
                 <div class="space-y-4">
                   <div v-for="review in event.reviews" :key="review.id"
