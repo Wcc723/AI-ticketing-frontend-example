@@ -218,8 +218,8 @@ const isFull = computed(() => event.value?.capacity?.remaining <= 0)
         <!-- Left Content -->
         <div class="lg:col-span-2 space-y-8">
           <!-- Navigation Tabs -->
-          <div class="bg-white rounded-2xl shadow-sm border border-purple-100 overflow-hidden">
-            <div class="flex border-b border-purple-100">
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="flex border-b border-gray-200">
               <button
                 v-for="tab in [
                   { id: 'info', label: '活動資訊', icon: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
@@ -258,14 +258,14 @@ const isFull = computed(() => event.value?.capacity?.remaining <= 0)
 
                 <!-- 深度體驗內容 -->
                 <div class="space-y-6">
-                  <div v-for="(content, key) in event.description.deepDive" :key="key" class="border-l-4 border-gradient-to-b from-cyan-400 to-purple-500 pl-6">
+                  <div v-for="(content, key) in event.description.deepDive" :key="key" class="border-l-4 border-indigo-500 pl-6">
                     <h4 class="text-lg font-semibold text-gray-900 mb-2 capitalize">{{
                       key === 'technology' ? '突破性技術' :
                       key === 'experience' ? '沉浸式體驗' :
                       key === 'innovation' ? '創新里程碑' :
                       key === 'future' ? '未來展望' : key
                     }}</h4>
-                    <p class="text-gray-700 leading-relaxed">{{ content }}</p>
+                    <div class="prose prose-sm max-w-none text-gray-700 leading-relaxed" v-html="content"></div>
                   </div>
                 </div>
 
@@ -274,9 +274,9 @@ const isFull = computed(() => event.value?.capacity?.remaining <= 0)
                   <h3 class="text-lg font-semibold text-gray-900 mb-4">獨家技術特色</h3>
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div v-for="feature in event.description.exclusiveFeatures" :key="feature.title"
-                         class="bg-gradient-to-br from-slate-50 to-indigo-50 rounded-xl p-4 border border-indigo-100">
-                      <h4 class="font-semibold text-indigo-900 mb-2">{{ feature.title }}</h4>
-                      <p class="text-gray-700 text-sm leading-relaxed">{{ feature.description }}</p>
+                         class="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
+                      <h4 class="font-semibold text-gray-900 mb-2">{{ feature.title }}</h4>
+                      <div class="prose prose-sm max-w-none text-gray-700 text-sm leading-relaxed" v-html="feature.description"></div>
                     </div>
                   </div>
                 </div>
@@ -315,12 +315,20 @@ const isFull = computed(() => event.value?.capacity?.remaining <= 0)
                   <h3 class="text-lg font-semibold text-gray-900 mb-4">體驗包含內容</h3>
                   <div class="grid grid-cols-1 gap-3">
                     <div v-for="item in event.pricing.included" :key="item"
-                         class="flex items-center space-x-3 p-3 bg-gradient-to-r from-emerald-50 to-cyan-50 rounded-lg border border-emerald-100">
-                      <svg class="w-5 h-5 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                         class="flex items-start space-x-3 p-3 bg-green-50 rounded-lg border border-green-200">
+                      <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                       </svg>
-                      <span class="text-gray-700 text-sm">{{ item }}</span>
+                      <div class="prose prose-sm max-w-none text-gray-700 text-sm" v-html="item"></div>
                     </div>
+                  </div>
+                </div>
+
+                <!-- 參與要求 -->
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900 mb-4">參與要求</h3>
+                  <div class="bg-amber-50 rounded-xl p-4 border border-amber-200">
+                    <div class="prose prose-sm max-w-none text-gray-700" v-html="event.requirements"></div>
                   </div>
                 </div>
 
@@ -331,10 +339,10 @@ const isFull = computed(() => event.value?.capacity?.remaining <= 0)
                     <div v-for="faq in event.faq" :key="faq.question"
                          class="border border-gray-200 rounded-xl overflow-hidden">
                       <div class="bg-gray-50 px-4 py-3 border-b border-gray-200">
-                        <h4 class="font-medium text-gray-900 text-sm">{{ faq.question }}</h4>
+                        <div class="prose prose-sm max-w-none font-medium text-gray-900 text-sm" v-html="faq.question"></div>
                       </div>
                       <div class="px-4 py-3">
-                        <p class="text-gray-700 text-sm leading-relaxed">{{ faq.answer }}</p>
+                        <div class="prose prose-sm max-w-none text-gray-700 text-sm leading-relaxed" v-html="faq.answer"></div>
                       </div>
                     </div>
                   </div>
@@ -461,28 +469,12 @@ const isFull = computed(() => event.value?.capacity?.remaining <= 0)
                 <!-- 特殊設施 -->
                 <div v-if="event.location.specialFeatures">
                   <h6 class="text-sm font-medium text-gray-700 mb-2">場地特色</h6>
-                  <div class="grid grid-cols-2 gap-2">
-                    <div v-for="feature in event.location.specialFeatures" :key="feature"
-                         class="text-xs text-gray-600 flex items-center space-x-1 p-2 bg-gray-50 rounded">
-                      <svg class="w-3 h-3 text-indigo-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
-                      </svg>
-                      <span>{{ feature }}</span>
-                    </div>
-                  </div>
+                  <div class="prose prose-sm max-w-none text-xs text-gray-600" v-html="event.location.specialFeatures"></div>
                 </div>
 
                 <div>
                   <h6 class="text-sm font-medium text-gray-700 mb-2">交通方式</h6>
-                  <ul class="space-y-1">
-                    <li v-for="transport in event.location.transportation" :key="transport"
-                        class="text-xs text-gray-600 flex items-start space-x-2">
-                      <svg class="w-3 h-3 text-indigo-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                      </svg>
-                      <span>{{ transport }}</span>
-                    </li>
-                  </ul>
+                  <div class="prose prose-sm max-w-none text-xs text-gray-600" v-html="event.location.transportation"></div>
                 </div>
               </div>
             </div>

@@ -20,22 +20,12 @@
     "address": "台北市信義區信義路五段 7 號 101 樓",
     "district": "信義區",
     "description": "位於台北 101 頂樓的未來科技實驗室，擁有 360 度城市景觀",
-    "transportation": [
-      "捷運台北 101/世貿站 2 號出口直達",
-      "高速電梯直達 101 樓未來實驗室",
-      "提供專屬停車位（需預約）",
-      "實驗室內設有傳送艙快速通道"
-    ],
+    "transportation": "<div class='space-y-3'><div class='flex items-center space-x-3'><div class='w-2 h-2 bg-indigo-500 rounded-full'></div><span class='text-gray-700'>捷運台北 101/世貿站 2 號出口直達</span></div><div class='flex items-center space-x-3'><div class='w-2 h-2 bg-indigo-500 rounded-full'></div><span class='text-gray-700'>高速電梯直達 101 樓未來實驗室</span></div><div class='flex items-center space-x-3'><div class='w-2 h-2 bg-indigo-500 rounded-full'></div><span class='text-gray-700'>提供專屬停車位（需預約）</span></div><div class='flex items-center space-x-3'><div class='w-2 h-2 bg-indigo-500 rounded-full'></div><span class='text-gray-700'>實驗室內設有傳送艙快速通道</span></div></div>",
     "coordinates": {
       "lat": 25.0340,
       "lng": 121.5645
     },
-    "specialFeatures": [
-      "360 度全景落地窗",
-      "反重力休息區",
-      "全息投影圓形劇場",
-      "量子咖啡調製機"
-    ]
+    "specialFeatures": "<div class='grid grid-cols-1 md:grid-cols-2 gap-4'><div class='flex items-center space-x-3 p-3 bg-gray-50 rounded-lg'><div class='w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0'><svg class='w-4 h-4 text-indigo-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'></path><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'></path></svg></div><span class='text-gray-700 font-medium'>360 度全景落地窗</span></div><div class='flex items-center space-x-3 p-3 bg-gray-50 rounded-lg'><div class='w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0'><svg class='w-4 h-4 text-indigo-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 10V3L4 14h7v7l9-11h-7z'></path></svg></div><span class='text-gray-700 font-medium'>反重力休息區</span></div><div class='flex items-center space-x-3 p-3 bg-gray-50 rounded-lg'><div class='w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0'><svg class='w-4 h-4 text-indigo-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2h3a1 1 0 110 2h-1v12a2 2 0 01-2 2H7a2 2 0 01-2-2V6H4a1 1 0 110-2h3z'></path></svg></div><span class='text-gray-700 font-medium'>全息投影圓形劇場</span></div><div class='flex items-center space-x-3 p-3 bg-gray-50 rounded-lg'><div class='w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0'><svg class='w-4 h-4 text-indigo-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2'></path></svg></div><span class='text-gray-700 font-medium'>量子咖啡調製機</span></div></div>"
   },
   "pricing": {
     "originalPrice": 3980,
@@ -43,14 +33,7 @@
     "currency": "TWD",
     "discountPercent": 25,
     "earlyBirdDeadline": "2024-12-25",
-    "included": [
-      "個人全息投影設備使用（價值 NT$ 15,000）",
-      "專業量子掃描建模",
-      "數位化身 NFT 收藏證書",
-      "未來科技午餐體驗",
-      "限量版光子手環紀念品",
-      "虛擬實境眼鏡（可帶回）"
-    ]
+    "included": "<div class='space-y-4'><div class='flex items-start space-x-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm'><div class='flex-shrink-0'><div class='w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold text-sm'>1</div></div><div class='flex-1'><h4 class='font-semibold text-gray-900 mb-1'>個人全息投影設備使用</h4><p class='text-sm text-gray-600'>專業級設備體驗，市價 NT$ 15,000</p></div></div><div class='flex items-start space-x-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm'><div class='flex-shrink-0'><div class='w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold text-sm'>2</div></div><div class='flex-1'><h4 class='font-semibold text-gray-900 mb-1'>專業量子掃描建模</h4><p class='text-sm text-gray-600'>高精度 3D 掃描與建模服務</p></div></div><div class='flex items-start space-x-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm'><div class='flex-shrink-0'><div class='w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold text-sm'>3</div></div><div class='flex-1'><h4 class='font-semibold text-gray-900 mb-1'>數位化身 NFT 收藏證書</h4><p class='text-sm text-gray-600'>獨一無二的數位資產收藏</p></div></div><div class='flex items-start space-x-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm'><div class='flex-shrink-0'><div class='w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold text-sm'>4</div></div><div class='flex-1'><h4 class='font-semibold text-gray-900 mb-1'>未來科技午餐體驗</h4><p class='text-sm text-gray-600'>特色分子料理與未來食品</p></div></div><div class='flex items-start space-x-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm'><div class='flex-shrink-0'><div class='w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold text-sm'>5</div></div><div class='flex-1'><h4 class='font-semibold text-gray-900 mb-1'>限量版光子手環紀念品</h4><p class='text-sm text-gray-600'>LED 發光手環，限量收藏</p></div></div><div class='flex items-start space-x-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm'><div class='flex-shrink-0'><div class='w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold text-sm'>6</div></div><div class='flex-1'><h4 class='font-semibold text-gray-900 mb-1'>虛擬實境眼鏡（可帶回）</h4><p class='text-sm text-gray-600'>專業 VR 設備，永久收藏</p></div></div></div>"
   },
   "capacity": {
     "total": 12,
@@ -81,44 +64,10 @@
       "🎁 珍貴收藏：獲得獨一無二的 NFT 數位資產",
       "👥 菁英聚會：與科技愛好者交流未來趨勢"
     ],
-    "deepDive": {
-      "technology": "我們採用最新的量子全息投影技術，結合 AI 深度學習和神經網路演算法，能夠在三維空間中創造出逼真的數位化身。參與者的每一個細微表情和動作都能被精確捕捉並投影，實現真正的虛實交融體驗。",
-      "experience": "整個體驗過程如同科幻電影般震撼。您將穿上特製的量子感應服，戴上神經連結頭盔，在全息投影艙中與自己的數位分身互動。透過手勢控制，您可以改變化身的外觀、能力，甚至讓它在虛擬世界中自由行動。",
-      "innovation": "這項技術代表了人類科技發展的最新里程碑。我們將展示如何透過量子糾纏原理實現瞬間數據傳輸，以及利用全息干涉技術創造出觸手可及的立體影像。每位參與者都將成為科技歷史的見證者。",
-      "future": "在不久的將來，這項技術將徹底改變人類的溝通方式、工作模式，甚至是存在形態。今天的體驗，就是明天世界的預告片。您將親身感受到科技如何重新定義現實的邊界。"
-    },
-    "exclusiveFeatures": [
-      {
-        "title": "量子掃描建模",
-        "description": "使用價值千萬的量子掃描儀，精確捕捉您的三維形體數據，創建高精度數位模型"
-      },
-      {
-        "title": "AI 情感引擎",
-        "description": "先進的人工智慧系統能夠學習並模擬您的表情、語調和個性特徵"
-      },
-      {
-        "title": "全息互動體驗",
-        "description": "在 360 度全息環境中與您的數位化身進行實時互動對話"
-      },
-      {
-        "title": "NFT 永久收藏",
-        "description": "您的數位化身將被鑄造成獨特的 NFT，永久保存在區塊鏈上"
-      }
-    ]
+    "deepDive": "<div class='space-y-6'><div class='bg-gradient-to-r from-indigo-50 to-blue-50 p-6 rounded-xl'><h3 class='text-lg font-semibold text-indigo-900 mb-3 flex items-center'><svg class='w-5 h-5 mr-2' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z'></path></svg>核心技術</h3><p class='text-gray-700 leading-relaxed'>我們採用最新的量子全息投影技術，結合 AI 深度學習和神經網路演算法，能夠在三維空間中創造出逼真的數位化身。參與者的每一個細微表情和動作都能被精確捕捉並投影，實現真正的虛實交融體驗。</p></div><div class='bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-xl'><h3 class='text-lg font-semibold text-purple-900 mb-3 flex items-center'><svg class='w-5 h-5 mr-2' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M14.828 14.828a4 4 0 01-5.656 0M9 10h1.01M15 10h1.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'></path></svg>體驗過程</h3><p class='text-gray-700 leading-relaxed'>整個體驗過程如同科幻電影般震撼。您將穿上特製的量子感應服，戴上神經連結頭盔，在全息投影艙中與自己的數位分身互動。透過手勢控制，您可以改變化身的外觀、能力，甚至讓它在虛擬世界中自由行動。</p></div><div class='bg-gradient-to-r from-emerald-50 to-teal-50 p-6 rounded-xl'><h3 class='text-lg font-semibold text-emerald-900 mb-3 flex items-center'><svg class='w-5 h-5 mr-2' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 10V3L4 14h7v7l9-11h-7z'></path></svg>創新突破</h3><p class='text-gray-700 leading-relaxed'>這項技術代表了人類科技發展的最新里程碑。我們將展示如何透過量子糾纏原理實現瞬間數據傳輸，以及利用全息干涉技術創造出觸手可及的立體影像。每位參與者都將成為科技歷史的見證者。</p></div><div class='bg-gradient-to-r from-orange-50 to-red-50 p-6 rounded-xl'><h3 class='text-lg font-semibold text-orange-900 mb-3 flex items-center'><svg class='w-5 h-5 mr-2' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z'></path></svg>未來展望</h3><p class='text-gray-700 leading-relaxed'>在不久的將來，這項技術將徹底改變人類的溝通方式、工作模式，甚至是存在形態。今天的體驗，就是明天世界的預告片。您將親身感受到科技如何重新定義現實的邊界。</p></div></div>",
+    "exclusiveFeatures": "<div class='grid grid-cols-1 md:grid-cols-2 gap-6'><div class='bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300'><div class='flex items-center mb-4'><div class='w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center mr-4'><svg class='w-6 h-6 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z'></path></svg></div><h3 class='text-lg font-semibold text-gray-900'>量子掃描建模</h3></div><p class='text-gray-600 leading-relaxed'>使用價值千萬的量子掃描儀，精確捕捉您的三維形體數據，創建高精度數位模型</p></div><div class='bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300'><div class='flex items-center mb-4'><div class='w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mr-4'><svg class='w-6 h-6 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z'></path></svg></div><h3 class='text-lg font-semibold text-gray-900'>AI 情感引擎</h3></div><p class='text-gray-600 leading-relaxed'>先進的人工智慧系統能夠學習並模擬您的表情、語調和個性特徵</p></div><div class='bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300'><div class='flex items-center mb-4'><div class='w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center mr-4'><svg class='w-6 h-6 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'></path><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'></path></svg></div><h3 class='text-lg font-semibold text-gray-900'>全息互動體驗</h3></div><p class='text-gray-600 leading-relaxed'>在 360 度全息環境中與您的數位化身進行實時互動對話</p></div><div class='bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300'><div class='flex items-center mb-4'><div class='w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center mr-4'><svg class='w-6 h-6 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z'></path></svg></div><h3 class='text-lg font-semibold text-gray-900'>NFT 永久收藏</h3></div><p class='text-gray-600 leading-relaxed'>您的數位化身將被鑄造成獨特的 NFT，永久保存在區塊鏈上</p></div></div>"
   },
-  "requirements": [
-    "年齡限制：18 歲以上（涉及先進科技設備）",
-    "身體狀況：無心臟病史、無癲癇病史",
-    "建議穿著深色緊身衣物（提升掃描精度）",
-    "請攜帶有效身份證件（實驗室安全管制）",
-    "建議提前 1 小時到達進行設備校準"
-  ],
-  "materials": {
-    "equipment": "量子全息投影系統 HoloGen-X1",
-    "software": "Neural Bridge AI v3.0",
-    "hardware": "VR眼鏡、量子感應服、神經連結頭盔",
-    "technology": "基於量子糾纏的即時渲染技術"
-  },
+  "requirements": "<div class='bg-amber-50 border border-amber-200 rounded-xl p-6'><div class='flex items-center mb-4'><svg class='w-6 h-6 text-amber-600 mr-2' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z'></path></svg><h3 class='text-lg font-semibold text-amber-900'>參與須知</h3></div><div class='space-y-4'><div class='flex items-start space-x-3'><div class='w-2 h-2 bg-amber-500 rounded-full mt-2 flex-shrink-0'></div><p class='text-gray-700'><strong>年齡限制：</strong>18 歲以上（涉及先進科技設備）</p></div><div class='flex items-start space-x-3'><div class='w-2 h-2 bg-amber-500 rounded-full mt-2 flex-shrink-0'></div><p class='text-gray-700'><strong>身體狀況：</strong>無心臟病史、無癲癇病史</p></div><div class='flex items-start space-x-3'><div class='w-2 h-2 bg-amber-500 rounded-full mt-2 flex-shrink-0'></div><p class='text-gray-700'><strong>建議穿著：</strong>深色緊身衣物（提升掃描精度）</p></div><div class='flex items-start space-x-3'><div class='w-2 h-2 bg-amber-500 rounded-full mt-2 flex-shrink-0'></div><p class='text-gray-700'><strong>必備文件：</strong>請攜帶有效身份證件（實驗室安全管制）</p></div><div class='flex items-start space-x-3'><div class='w-2 h-2 bg-amber-500 rounded-full mt-2 flex-shrink-0'></div><p class='text-gray-700'><strong>到達時間：</strong>建議提前 1 小時到達進行設備校準</p></div></div></div>",
   "reviews": [
     {
       "id": 1,
@@ -161,28 +110,7 @@
     "transfer": "可於活動前 5 天申請轉讓名額（需重新進行安全審核）",
     "safety": "所有設備均符合國際安全標準，並有專業技術人員全程監控"
   },
-  "faq": [
-    {
-      "question": "全息投影技術安全嗎？",
-      "answer": "絕對安全！我們使用的是低功率量子光束技術，對人體完全無害。所有設備都通過了 FDA 和歐盟 CE 認證。"
-    },
-    {
-      "question": "我的數位化身資料會被保存嗎？",
-      "answer": "您完全擁有自己的數位化身資料。我們會在體驗結束後將所有個人資料完全刪除，只有您選擇鑄造的 NFT 會保存在區塊鏈上。"
-    },
-    {
-      "question": "需要有科技背景才能參加嗎？",
-      "answer": "完全不需要！我們的體驗設計對所有人開放。專業團隊會全程指導，即使是科技新手也能輕鬆享受整個過程。"
-    },
-    {
-      "question": "可以帶朋友一起體驗嗎？",
-      "answer": "當然可以！我們特別歡迎朋友一起參與。在群體模式下，您甚至可以與朋友的數位化身在虛擬空間中互動。"
-    },
-    {
-      "question": "NFT 可以交易嗎？",
-      "answer": "是的！您的數位化身 NFT 將在主流 NFT 交易平台上市，具有完整的所有權和交易權。"
-    }
-  ],
+  "faq": "<div class='space-y-6'><div class='bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm'><div class='bg-gray-50 px-6 py-4 border-b border-gray-200'><h3 class='font-semibold text-gray-900 flex items-center'><svg class='w-5 h-5 mr-2 text-indigo-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'></path></svg>全息投影技術安全嗎？</h3></div><div class='px-6 py-4'><p class='text-gray-700 leading-relaxed'>絕對安全！我們使用的是低功率量子光束技術，對人體完全無害。所有設備都通過了 FDA 和歐盟 CE 認證。</p></div></div><div class='bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm'><div class='bg-gray-50 px-6 py-4 border-b border-gray-200'><h3 class='font-semibold text-gray-900 flex items-center'><svg class='w-5 h-5 mr-2 text-indigo-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z'></path></svg>我的數位化身資料會被保存嗎？</h3></div><div class='px-6 py-4'><p class='text-gray-700 leading-relaxed'>您完全擁有自己的數位化身資料。我們會在體驗結束後將所有個人資料完全刪除，只有您選擇鑄造的 NFT 會保存在區塊鏈上。</p></div></div><div class='bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm'><div class='bg-gray-50 px-6 py-4 border-b border-gray-200'><h3 class='font-semibold text-gray-900 flex items-center'><svg class='w-5 h-5 mr-2 text-indigo-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'></path></svg>需要有科技背景才能參加嗎？</h3></div><div class='px-6 py-4'><p class='text-gray-700 leading-relaxed'>完全不需要！我們的體驗設計對所有人開放。專業團隊會全程指導，即使是科技新手也能輕鬆享受整個過程。</p></div></div><div class='bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm'><div class='bg-gray-50 px-6 py-4 border-b border-gray-200'><h3 class='font-semibold text-gray-900 flex items-center'><svg class='w-5 h-5 mr-2 text-indigo-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'></path></svg>可以帶朋友一起體驗嗎？</h3></div><div class='px-6 py-4'><p class='text-gray-700 leading-relaxed'>當然可以！我們特別歡迎朋友一起參與。在群體模式下，您甚至可以與朋友的數位化身在虛擬空間中互動。</p></div></div><div class='bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm'><div class='bg-gray-50 px-6 py-4 border-b border-gray-200'><h3 class='font-semibold text-gray-900 flex items-center'><svg class='w-5 h-5 mr-2 text-indigo-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z'></path></svg>NFT 可以交易嗎？</h3></div><div class='px-6 py-4'><p class='text-gray-700 leading-relaxed'>是的！您的數位化身 NFT 將在主流 NFT 交易平台上市，具有完整的所有權和交易權。</p></div></div></div>",
   "relatedEvents": [
     "ai-robot-workshop-2024",
     "metaverse-creation-2024",
