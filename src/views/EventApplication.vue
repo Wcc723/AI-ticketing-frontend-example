@@ -1,5 +1,9 @@
 <script setup>
 import { reactive, ref, computed, onMounted, watch } from 'vue'
+import { QuillEditor } from '@vueup/vue-quill'
+import VueDatePicker from '@vuepic/vue-datepicker'
+import '@vuepic/vue-datepicker/dist/main.css'
+import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
 const loading = ref(true)
 const loadError = ref('')
@@ -32,6 +36,63 @@ const newTag = ref('')
 const tagLimit = 5
 const tagFeedback = ref('')
 const remainingTags = computed(() => Math.max(tagLimit - form.tags.length, 0))
+const editorModes = ['visual', 'html', 'preview']
+const editorMode = ref(editorModes[0])
+const htmlSource = ref('')
+const visualEditorKey = ref(0)
+const startDate = ref(null)
+const endDate = ref(null)
+const startTime = ref('')
+const endTime = ref('')
+let syncingSchedule = false
+
+function pad(value) {
+  return `${value}`.padStart(2, '0')
+}
+
+function combineDateAndTime(dateValue, timeValue) {
+  if (!dateValue || !timeValue) return ''
+  const [hours, minutes] = timeValue.split(':').map(Number)
+  if (Number.isNaN(hours) || Number.isNaN(minutes)) return ''
+  const date = new Date(dateValue)
+  if (Number.isNaN(date.getTime())) return ''
+  date.setHours(hours, minutes, 0, 0)
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`
+}
+
+function parseLocalDateTime(value) {
+  if (!value || typeof value !== 'string') {
+    return { date: null, time: '' }
+  }
+  const [datePart, timePart] = value.split('T')
+  if (!datePart || !timePart) {
+    return { date: null, time: '' }
+  }
+  const [year, month, day] = datePart.split('-').map(Number)
+  const [hours, minutes] = timePart.split(':').map(Number)
+  if ([year, month, day, hours, minutes].some((n) => Number.isNaN(n))) {
+    return { date: null, time: '' }
+  }
+  const date = new Date(year, month - 1, day)
+  date.setHours(0, 0, 0, 0)
+  return { date, time: `${pad(hours)}:${pad(minutes)}` }
+}
+
+function toDateObject(dateValue, timeValue) {
+  if (!dateValue || !timeValue) return null
+  const [hours, minutes] = timeValue.split(':').map(Number)
+  if (Number.isNaN(hours) || Number.isNaN(minutes)) return null
+  const date = new Date(dateValue)
+  if (Number.isNaN(date.getTime())) return null
+  date.setHours(hours, minutes, 0, 0)
+  return date
+}
+
+function hasDescriptionContent(value) {
+  if (!value) return false
+  const stripped = value.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim()
+  return stripped.length > 0
+}
 
 const fieldErrors = reactive({
   title: '',
@@ -94,6 +155,47 @@ watch(
   }
 )
 
+watch(
+  () => form.description,
+  (value) => {
+    if (fieldErrors.description && hasDescriptionContent(value)) {
+      fieldErrors.description = ''
+    }
+  }
+)
+
+watch(editorMode, (mode) => {
+  if (mode === 'html') {
+    htmlSource.value = form.description || ''
+  } else if (mode === 'visual') {
+    visualEditorKey.value += 1
+  } else if (mode === 'preview' && !hasDescriptionContent(form.description)) {
+    htmlSource.value = ''
+  }
+})
+
+watch(htmlSource, (value) => {
+  if (editorMode.value === 'html') {
+    form.description = value
+  }
+})
+
+watch([startDate, startTime], ([dateValue, timeValue]) => {
+  if (syncingSchedule) return
+  form.schedule.start = combineDateAndTime(dateValue, timeValue)
+  if (fieldErrors.start && dateValue && timeValue) {
+    fieldErrors.start = ''
+  }
+}, { immediate: true })
+
+watch([endDate, endTime], ([dateValue, timeValue]) => {
+  if (syncingSchedule) return
+  form.schedule.end = combineDateAndTime(dateValue, timeValue)
+  if (fieldErrors.end && dateValue && timeValue) {
+    fieldErrors.end = ''
+  }
+}, { immediate: true })
+
 function addTag() {
   const value = newTag.value.trim()
   if (!value) {
@@ -143,6 +245,25 @@ function handleTagKeydown(event) {
   }
 }
 
+function handleCapacityInput(event) {
+  const digitsOnly = event.target.value.replace(/\D+/g, '')
+  form.capacityTotal = digitsOnly
+  if (fieldErrors.capacityTotal && digitsOnly) {
+    fieldErrors.capacityTotal = ''
+  }
+}
+
+function syncPickersFromSchedule() {
+  syncingSchedule = true
+  const { date: startDateValue, time: startTimeValue } = parseLocalDateTime(form.schedule.start)
+  const { date: endDateValue, time: endTimeValue } = parseLocalDateTime(form.schedule.end)
+  startDate.value = startDateValue
+  startTime.value = startTimeValue
+  endDate.value = endDateValue
+  endTime.value = endTimeValue
+  syncingSchedule = false
+}
+
 function resetFieldErrors() {
   Object.keys(fieldErrors).forEach((key) => {
     fieldErrors[key] = ''
@@ -178,34 +299,35 @@ function validateForm() {
     isValid = false
   }
 
-  if (!form.schedule.start) {
-    fieldErrors.start = '請選擇開始時間'
+  if (!startDate.value || !startTime.value) {
+    fieldErrors.start = !startDate.value ? '請選擇開始日期' : '請選擇開始時間'
     isValid = false
   }
 
-  if (!form.schedule.end) {
-    fieldErrors.end = '請選擇結束時間'
+  if (!endDate.value || !endTime.value) {
+    fieldErrors.end = !endDate.value ? '請選擇結束日期' : '請選擇結束時間'
     isValid = false
   }
 
-  if (form.schedule.start && form.schedule.end) {
-    const start = new Date(form.schedule.start)
-    const end = new Date(form.schedule.end)
-    if (Number.isNaN(start.getTime())) {
-      fieldErrors.start = '請輸入有效的開始時間'
-      isValid = false
-    }
-    if (Number.isNaN(end.getTime())) {
-      fieldErrors.end = '請輸入有效的結束時間'
-      isValid = false
-    }
-    if (!Number.isNaN(start.getTime()) && !Number.isNaN(end.getTime()) && end <= start) {
-      fieldErrors.end = '結束時間需晚於開始時間'
-      isValid = false
-    }
+  const startDateTime = toDateObject(startDate.value, startTime.value)
+  const endDateTime = toDateObject(endDate.value, endTime.value)
+
+  if (startDate.value && startTime.value && !startDateTime) {
+    fieldErrors.start = '請輸入有效的開始時間'
+    isValid = false
   }
 
-  if (!form.description.trim()) {
+  if (endDate.value && endTime.value && !endDateTime) {
+    fieldErrors.end = '請輸入有效的結束時間'
+    isValid = false
+  }
+
+  if (startDateTime && endDateTime && endDateTime <= startDateTime) {
+    fieldErrors.end = '結束時間需晚於開始時間'
+    isValid = false
+  }
+
+  if (!hasDescriptionContent(form.description)) {
     fieldErrors.description = '請輸入活動介紹'
     isValid = false
   }
@@ -257,7 +379,7 @@ function handleSubmit() {
       start: form.schedule.start,
       end: form.schedule.end
     },
-    description: form.description.trim(),
+    description: form.description,
     capacity: {
       total: Number(form.capacityTotal)
     },
@@ -287,7 +409,10 @@ async function loadCityData() {
   }
 }
 
-onMounted(loadCityData)
+onMounted(() => {
+  syncPickersFromSchedule()
+  loadCityData()
+})
 </script>
 
 <template>
@@ -341,268 +466,365 @@ onMounted(loadCityData)
               {{ loadError }}
             </div>
 
-            <form @submit.prevent="handleSubmit" class="space-y-10">
-              <section class="bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <h2 class="text-lg font-semibold text-gray-900">基本資訊</h2>
-                    <p class="text-sm text-gray-500 mt-1">這些資訊將顯示在活動頁面上。</p>
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-1 gap-6">
-                  <div>
-                    <label for="title" class="block text-sm font-medium text-gray-700">活動標題</label>
-                    <input
-                      id="title"
-                      v-model="form.title"
-                      type="text"
-                      :class="[baseInputClass, fieldErrors.title ? errorInputClass : normalInputClass]"
-                      placeholder="請輸入活動名稱"
-                    >
-                    <p v-if="fieldErrors.title" class="mt-1 text-sm text-red-500">{{ fieldErrors.title }}</p>
-                  </div>
-
-                  <div>
-                    <label for="subtitle" class="block text-sm font-medium text-gray-700">副標題</label>
-                    <input
-                      id="subtitle"
-                      v-model="form.subtitle"
-                      type="text"
-                      :class="[baseInputClass, fieldErrors.subtitle ? errorInputClass : normalInputClass]"
-                      placeholder="補充活動亮點"
-                    >
-                    <p v-if="fieldErrors.subtitle" class="mt-1 text-sm text-red-500">{{ fieldErrors.subtitle }}</p>
-                  </div>
-                </div>
-              </section>
-
-              <section class="bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
-                <div>
-                  <h2 class="text-lg font-semibold text-gray-900">活動地點</h2>
-                  <p class="text-sm text-gray-500 mt-1">請依序選擇縣市、行政區，並填寫詳細地址。</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label for="city" class="block text-sm font-medium text-gray-700">縣市</label>
-                    <select
-                      id="city"
-                      v-model="form.location.city"
-                      :class="[baseInputClass, fieldErrors.locationCity ? errorInputClass : normalInputClass]"
-                    >
-                      <option value="" disabled>請選擇</option>
-                      <option v-for="city in cityOptions" :key="city.name" :value="city.name">{{ city.name }}</option>
-                    </select>
-                    <p v-if="fieldErrors.locationCity" class="mt-1 text-sm text-red-500">{{ fieldErrors.locationCity }}</p>
-                  </div>
-
-                  <div>
-                    <label for="district" class="block text-sm font-medium text-gray-700">行政區</label>
-                    <select
-                      id="district"
-                      v-model="form.location.district"
-                      :disabled="!form.location.city"
-                      :class="[baseInputClass, fieldErrors.locationDistrict ? errorInputClass : normalInputClass, !form.location.city ? 'bg-gray-50 text-gray-400 cursor-not-allowed' : '']"
-                    >
-                      <option value="" disabled>{{ form.location.city ? '請選擇行政區' : '請先選擇縣市' }}</option>
-                      <option v-for="district in districtOptions" :key="district" :value="district">{{ district }}</option>
-                    </select>
-                    <p v-if="fieldErrors.locationDistrict" class="mt-1 text-sm text-red-500">{{ fieldErrors.locationDistrict }}</p>
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-1 gap-6">
-                  <div>
-                    <label for="address" class="block text-sm font-medium text-gray-700">詳細地址</label>
-                    <input
-                      id="address"
-                      v-model="form.location.address"
-                      type="text"
-                      :class="[baseInputClass, fieldErrors.address ? errorInputClass : normalInputClass]"
-                      placeholder="例：信義路五段 7 號 101 樓"
-                    >
-                    <p v-if="fieldErrors.address" class="mt-1 text-sm text-red-500">{{ fieldErrors.address }}</p>
-                  </div>
-
-                  <div>
-                    <label for="location-description" class="block text-sm font-medium text-gray-700">場地描述（選填）</label>
-                    <textarea
-                      id="location-description"
-                      v-model="form.location.description"
-                      rows="3"
-                      :class="[baseInputClass, normalInputClass, 'min-h-[120px]']"
-                      placeholder="描述場地特色與設備"
-                    ></textarea>
-                  </div>
-                </div>
-              </section>
-
-              <section class="bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
-                <div>
-                  <h2 class="text-lg font-semibold text-gray-900">活動時間</h2>
-                  <p class="text-sm text-gray-500 mt-1">請選擇活動開始與結束時間，包含日期、時、分。</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label for="start" class="block text-sm font-medium text-gray-700">開始時間</label>
-                    <input
-                      id="start"
-                      v-model="form.schedule.start"
-                      type="datetime-local"
-                      :class="[baseInputClass, fieldErrors.start ? errorInputClass : normalInputClass]"
-                    >
-                    <p v-if="fieldErrors.start" class="mt-1 text-sm text-red-500">{{ fieldErrors.start }}</p>
-                  </div>
-                  <div>
-                    <label for="end" class="block text-sm font-medium text-gray-700">結束時間</label>
-                    <input
-                      id="end"
-                      v-model="form.schedule.end"
-                      type="datetime-local"
-                      :class="[baseInputClass, fieldErrors.end ? errorInputClass : normalInputClass]"
-                    >
-                    <p v-if="fieldErrors.end" class="mt-1 text-sm text-red-500">{{ fieldErrors.end }}</p>
-                  </div>
-                </div>
-              </section>
-
-              <section class="bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
-                <div>
-                  <h2 class="text-lg font-semibold text-gray-900">活動介紹</h2>
-                  <p class="text-sm text-gray-500 mt-1">分享活動內容、亮點與參與者可期待的體驗。</p>
-                </div>
-
-                <textarea
-                  id="description"
-                  v-model="form.description"
-                  rows="8"
-                  :class="[baseInputClass, fieldErrors.description ? errorInputClass : normalInputClass, 'min-h-[220px]']"
-                  placeholder="請輸入活動介紹內容"
-                ></textarea>
-                <p v-if="fieldErrors.description" class="text-sm text-red-500">{{ fieldErrors.description }}</p>
-              </section>
-
-              <section class="bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
-                <div>
-                  <h2 class="text-lg font-semibold text-gray-900">名額與分類</h2>
-                  <p class="text-sm text-gray-500 mt-1">設定報名名額、活動狀態與標籤。</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label for="capacity" class="block text-sm font-medium text-gray-700">總名額</label>
-                    <input
-                      id="capacity"
-                      v-model="form.capacityTotal"
-                      type="number"
-                      inputmode="numeric"
-                      min="1"
-                      step="1"
-                      :class="[baseInputClass, fieldErrors.capacityTotal ? errorInputClass : normalInputClass]"
-                      placeholder="例：30"
-                    >
-                    <p v-if="fieldErrors.capacityTotal" class="mt-1 text-sm text-red-500">{{ fieldErrors.capacityTotal }}</p>
-                  </div>
-
-                  <div>
-                    <label for="status" class="block text-sm font-medium text-gray-700">活動狀態</label>
-                    <select
-                      id="status"
-                      v-model="form.status"
-                      :class="[baseInputClass, fieldErrors.status ? errorInputClass : normalInputClass]"
-                    >
-                      <option value="" disabled>請選擇狀態</option>
-                      <option v-for="option in statusOptions" :key="option" :value="option">{{ option }}</option>
-                    </select>
-                    <p v-if="fieldErrors.status" class="mt-1 text-sm text-red-500">{{ fieldErrors.status }}</p>
-                  </div>
-                </div>
-
-                <div>
-                  <label class="block text-sm font-medium text-gray-700">標籤（選填）</label>
-                  <div class="mt-2">
-                    <div
-                      class="flex flex-wrap items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 shadow-sm focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-200 transition"
-                    >
-                      <span
-                        v-for="tag in form.tags"
-                        :key="tag"
-                        class="inline-flex items-center px-3 py-1 bg-indigo-50 text-indigo-600 rounded-full text-sm"
-                      >
-                        {{ tag }}
-                        <button type="button" class="ml-2 text-indigo-500 hover:text-indigo-700" @click="removeTag(tag)">
-                          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                          </svg>
-                        </button>
-                      </span>
-                      <input
-                        v-model="newTag"
-                        type="text"
-                        :placeholder="form.tags.length ? (form.tags.length >= tagLimit ? '標籤已達上限' : '再輸入以新增標籤') : '輸入標籤後按 Enter'"
-                        :readonly="form.tags.length >= tagLimit"
-                        :class="[ 'flex-1 min-w-[100px] border-none bg-transparent text-sm text-gray-900 placeholder-gray-400 py-1 focus:outline-none', form.tags.length >= tagLimit ? 'cursor-not-allowed text-gray-400' : '' ]"
-                        @keydown="handleTagKeydown"
-                      >
+            <form @submit.prevent="handleSubmit">
+              <section class="bg-white/90 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-8 space-y-10">
+                <div class="space-y-12">
+                  <div class="space-y-6">
+                    <div>
+                      <h2 class="text-lg font-semibold text-gray-900">基本資訊</h2>
+                      <p class="text-sm text-gray-500 mt-1">這些資訊將顯示在活動頁面上。</p>
                     </div>
-                    <div class="mt-2 flex justify-between text-xs text-gray-500">
-                      <span :class="tagFeedback ? 'text-red-500' : 'text-gray-500'">
-                        {{ tagFeedback || `可再新增 ${remainingTags} 個標籤` }}
-                      </span>
-                      <span>已新增 {{ form.tags.length }} / {{ tagLimit }}</span>
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              <section class="bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
-                <div>
-                  <h2 class="text-lg font-semibold text-gray-900">票價設定</h2>
-                  <p class="text-sm text-gray-500 mt-1">設定報名費用的幣別與金額。</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label for="currency" class="block text-sm font-medium text-gray-700">幣別</label>
-                    <select
-                      id="currency"
-                      v-model="form.currency"
-                      :class="[baseInputClass, fieldErrors.currency ? errorInputClass : normalInputClass]"
-                    >
-                      <option value="" disabled>請選擇幣別</option>
-                      <option v-for="currency in currencyOptions" :key="currency" :value="currency">{{ currency }}</option>
-                    </select>
-                    <p v-if="fieldErrors.currency" class="mt-1 text-sm text-red-500">{{ fieldErrors.currency }}</p>
-                  </div>
-
-                  <div>
-                    <label for="price" class="block text-sm font-medium text-gray-700">票價</label>
-                    <div class="relative">
-                      <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-sm text-gray-400">
-                        {{ form.currency || '幣別' }}
+                    <div class="grid grid-cols-1 gap-6">
+                      <div>
+                        <label for="title" class="block text-sm font-medium text-gray-700">活動標題</label>
+                        <input
+                          id="title"
+                          v-model="form.title"
+                          type="text"
+                          :class="[baseInputClass, fieldErrors.title ? errorInputClass : normalInputClass]"
+                          placeholder="請輸入活動名稱"
+                        >
+                        <p v-if="fieldErrors.title" class="mt-1 text-sm text-red-500">{{ fieldErrors.title }}</p>
                       </div>
-                      <input
-                        id="price"
-                        v-model="form.priceAmount"
-                        type="number"
-                        min="0"
-                        step="0.01"
-                        :class="[baseInputClass, fieldErrors.priceAmount ? errorInputClass : normalInputClass, 'pl-20']"
-                        placeholder="請輸入票價"
-                      >
+
+                      <div>
+                        <label for="subtitle" class="block text-sm font-medium text-gray-700">副標題</label>
+                        <input
+                          id="subtitle"
+                          v-model="form.subtitle"
+                          type="text"
+                          :class="[baseInputClass, fieldErrors.subtitle ? errorInputClass : normalInputClass]"
+                          placeholder="補充活動亮點"
+                        >
+                        <p v-if="fieldErrors.subtitle" class="mt-1 text-sm text-red-500">{{ fieldErrors.subtitle }}</p>
+                      </div>
                     </div>
-                    <p v-if="fieldErrors.priceAmount" class="mt-1 text-sm text-red-500">{{ fieldErrors.priceAmount }}</p>
+                  </div>
+
+                  <div class="space-y-6">
+                    <div>
+                      <h2 class="text-lg font-semibold text-gray-900">活動地點</h2>
+                      <p class="text-sm text-gray-500 mt-1">請依序選擇縣市、行政區，並填寫詳細地址。</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label for="city" class="block text-sm font-medium text-gray-700">縣市</label>
+                        <select
+                          id="city"
+                          v-model="form.location.city"
+                          :class="[baseInputClass, fieldErrors.locationCity ? errorInputClass : normalInputClass]"
+                        >
+                          <option value="" disabled>請選擇</option>
+                          <option v-for="city in cityOptions" :key="city.name" :value="city.name">{{ city.name }}</option>
+                        </select>
+                        <p v-if="fieldErrors.locationCity" class="mt-1 text-sm text-red-500">{{ fieldErrors.locationCity }}</p>
+                      </div>
+
+                      <div>
+                        <label for="district" class="block text-sm font-medium text-gray-700">行政區</label>
+                        <select
+                          id="district"
+                          v-model="form.location.district"
+                          :disabled="!form.location.city"
+                          :class="[baseInputClass, fieldErrors.locationDistrict ? errorInputClass : normalInputClass, !form.location.city ? 'bg-gray-50 text-gray-400 cursor-not-allowed' : '']"
+                        >
+                          <option value="" disabled>{{ form.location.city ? '請選擇行政區' : '請先選擇縣市' }}</option>
+                          <option v-for="district in districtOptions" :key="district" :value="district">{{ district }}</option>
+                        </select>
+                        <p v-if="fieldErrors.locationDistrict" class="mt-1 text-sm text-red-500">{{ fieldErrors.locationDistrict }}</p>
+                      </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-6">
+                      <div>
+                        <label for="address" class="block text-sm font-medium text-gray-700">詳細地址</label>
+                        <input
+                          id="address"
+                          v-model="form.location.address"
+                          type="text"
+                          :class="[baseInputClass, fieldErrors.address ? errorInputClass : normalInputClass]"
+                          placeholder="例：信義路五段 7 號 101 樓"
+                        >
+                        <p v-if="fieldErrors.address" class="mt-1 text-sm text-red-500">{{ fieldErrors.address }}</p>
+                      </div>
+
+                      <div>
+                        <label for="location-description" class="block text-sm font-medium text-gray-700">場地描述（選填）</label>
+                        <textarea
+                          id="location-description"
+                          v-model="form.location.description"
+                          rows="3"
+                          :class="[baseInputClass, normalInputClass, 'min-h-[120px]']"
+                          placeholder="描述場地特色與設備"
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="space-y-6">
+                    <div>
+                      <h2 class="text-lg font-semibold text-gray-900">活動時間</h2>
+                      <p class="text-sm text-gray-500 mt-1">分別選擇日期與時間，系統會自動組合完整時段。</p>
+                    </div>
+                    <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+                      <div class="space-y-4">
+                        <p class="text-sm font-semibold text-gray-700">開始</p>
+                        <div class="space-y-3">
+                          <div>
+                            <label for="start-date" class="block text-xs font-medium uppercase tracking-wide text-gray-500">日期</label>
+                            <VueDatePicker
+                              id="start-date"
+                              v-model="startDate"
+                              :enable-time-picker="false"
+                              :format="'yyyy-MM-dd'"
+                              :preview-format="'yyyy 年 MM 月 dd 日'"
+                              locale="zh-TW"
+                              auto-apply
+                              :teleport="false"
+                              placeholder="選擇日期"
+                              :input-class="fieldErrors.start ? 'dp-input dp-input-error' : 'dp-input'"
+                              :class="fieldErrors.start ? 'ring-2 ring-red-200 rounded-xl' : ''"
+                            />
+                          </div>
+                          <div>
+                            <label for="start-time" class="block text-xs font-medium uppercase tracking-wide text-gray-500">時間</label>
+                            <VueDatePicker
+                              id="start-time"
+                              v-model="startTime"
+                              time-picker
+                              :format="'HH:mm'"
+                              :preview-format="'HH:mm'"
+                              :minutes-increment="5"
+                              locale="zh-TW"
+                              auto-apply
+                              :teleport="false"
+                              :model-type="'format'"
+                              placeholder="選擇時間"
+                              :input-class="fieldErrors.start ? 'dp-input dp-input-error' : 'dp-input'"
+                              :class="fieldErrors.start ? 'ring-2 ring-red-200 rounded-xl' : ''"
+                            />
+                          </div>
+                        </div>
+                        <p v-if="fieldErrors.start" class="text-sm text-red-500">{{ fieldErrors.start }}</p>
+                      </div>
+
+                      <div class="space-y-4">
+                        <p class="text-sm font-semibold text-gray-700">結束</p>
+                        <div class="space-y-3">
+                          <div>
+                            <label for="end-date" class="block text-xs font-medium uppercase tracking-wide text-gray-500">日期</label>
+                            <VueDatePicker
+                              id="end-date"
+                              v-model="endDate"
+                              :enable-time-picker="false"
+                              :format="'yyyy-MM-dd'"
+                              :preview-format="'yyyy 年 MM 月 dd 日'"
+                              locale="zh-TW"
+                              auto-apply
+                              :teleport="false"
+                              placeholder="選擇日期"
+                              :input-class="fieldErrors.end ? 'dp-input dp-input-error' : 'dp-input'"
+                              :class="fieldErrors.end ? 'ring-2 ring-red-200 rounded-xl' : ''"
+                            />
+                          </div>
+                          <div>
+                            <label for="end-time" class="block text-xs font-medium uppercase tracking-wide text-gray-500">時間</label>
+                            <VueDatePicker
+                              id="end-time"
+                              v-model="endTime"
+                              time-picker
+                              :format="'HH:mm'"
+                              :preview-format="'HH:mm'"
+                              :minutes-increment="5"
+                              locale="zh-TW"
+                              auto-apply
+                              :teleport="false"
+                              :model-type="'format'"
+                              placeholder="選擇時間"
+                              :input-class="fieldErrors.end ? 'dp-input dp-input-error' : 'dp-input'"
+                              :class="fieldErrors.end ? 'ring-2 ring-red-200 rounded-xl' : ''"
+                            />
+                          </div>
+                        </div>
+                        <p v-if="fieldErrors.end" class="text-sm text-red-500">{{ fieldErrors.end }}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="space-y-6">
+                    <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                      <div>
+                        <h2 class="text-lg font-semibold text-gray-900">活動介紹</h2>
+                        <p class="text-sm text-gray-500 mt-1">分享活動內容、亮點與參與者可期待的體驗。</p>
+                      </div>
+                      <div class="inline-flex rounded-full border border-gray-200 bg-white p-1 text-xs font-medium shadow-sm">
+                        <button
+                          v-for="mode in editorModes"
+                          :key="mode"
+                          type="button"
+                          class="px-3 py-1.5 rounded-full transition capitalize"
+                          :class="editorMode === mode ? 'bg-indigo-600 text-white shadow' : 'text-gray-600 hover:text-indigo-600'"
+                          @click="editorMode = mode"
+                        >
+                          {{ mode === 'visual' ? '所見即所得' : mode === 'html' ? 'HTML' : '預覽' }}
+                        </button>
+                      </div>
+                    </div>
+                    <div class="space-y-3">
+                      <div v-if="editorMode === 'visual'" class="rich-editor rounded-xl border border-gray-200 overflow-hidden bg-white" :key="`visual-${visualEditorKey}`">
+                        <QuillEditor
+                          v-model:content="form.description"
+                          content-type="html"
+                          theme="snow"
+                          :toolbar="[
+                            ['bold', 'italic', 'underline', 'strike'],
+                            [{ header: 1 }, { header: 2 }],
+                            [{ list: 'ordered' }, { list: 'bullet' }],
+                            ['link', 'blockquote', 'code-block'],
+                            [{ color: [] }, { background: [] }],
+                            ['clean']
+                          ]"
+                        />
+                      </div>
+                      <div v-else class="space-y-2">
+                        <textarea
+                          v-if="editorMode === 'html'"
+                          v-model="htmlSource"
+                          rows="14"
+                          spellcheck="false"
+                          class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 font-mono text-sm text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+                          placeholder="直接輸入或編修 HTML 內容"
+                        ></textarea>
+                        <div
+                          v-else
+                          class="preview-pane rounded-xl border border-gray-200 bg-white px-6 py-5 shadow-inner text-sm leading-relaxed text-gray-800"
+                          v-html="form.description || '<p class=\'text-gray-400\'>目前沒有內容</p>'"
+                        ></div>
+                        <p class="text-xs text-gray-500">可使用切換檢視內容，HTML 模式資料會與其他模式保持同步。</p>
+                      </div>
+                      <p v-if="fieldErrors.description" class="text-sm text-red-500">{{ fieldErrors.description }}</p>
+                    </div>
+                  </div>
+
+                  <div class="space-y-6">
+                    <div>
+                      <h2 class="text-lg font-semibold text-gray-900">名額與分類</h2>
+                      <p class="text-sm text-gray-500 mt-1">設定報名名額、活動狀態與標籤。</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label for="capacity" class="block text-sm font-medium text-gray-700">總名額</label>
+                        <input
+                          id="capacity"
+                          v-model="form.capacityTotal"
+                          type="text"
+                          inputmode="numeric"
+                          pattern="\\d*"
+                          :class="[baseInputClass, fieldErrors.capacityTotal ? errorInputClass : normalInputClass]"
+                          placeholder="例：30"
+                          @input="handleCapacityInput"
+                        >
+                        <p v-if="fieldErrors.capacityTotal" class="mt-1 text-sm text-red-500">{{ fieldErrors.capacityTotal }}</p>
+                      </div>
+
+                      <div>
+                        <label for="status" class="block text-sm font-medium text-gray-700">活動狀態</label>
+                        <select
+                          id="status"
+                          v-model="form.status"
+                          :class="[baseInputClass, fieldErrors.status ? errorInputClass : normalInputClass]"
+                        >
+                          <option value="" disabled>請選擇狀態</option>
+                          <option v-for="option in statusOptions" :key="option" :value="option">{{ option }}</option>
+                        </select>
+                        <p v-if="fieldErrors.status" class="mt-1 text-sm text-red-500">{{ fieldErrors.status }}</p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700">標籤（選填）</label>
+                      <div class="mt-2">
+                        <div
+                          class="flex flex-wrap items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 shadow-sm focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-200 transition"
+                        >
+                          <span
+                            v-for="tag in form.tags"
+                            :key="tag"
+                            class="inline-flex items-center px-3 py-1 bg-indigo-50 text-indigo-600 rounded-full text-sm"
+                          >
+                            {{ tag }}
+                            <button type="button" class="ml-2 text-indigo-500 hover:text-indigo-700" @click="removeTag(tag)">
+                              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                              </svg>
+                            </button>
+                          </span>
+                          <input
+                            v-model="newTag"
+                            type="text"
+                            :placeholder="form.tags.length ? (form.tags.length >= tagLimit ? '標籤已達上限' : '再輸入以新增標籤') : '輸入標籤後按 Enter'"
+                            :readonly="form.tags.length >= tagLimit"
+                            :class="[ 'flex-1 min-w-[100px] border-none bg-transparent text-sm text-gray-900 placeholder-gray-400 py-1 focus:outline-none', form.tags.length >= tagLimit ? 'cursor-not-allowed text-gray-400' : '' ]"
+                            @keydown="handleTagKeydown"
+                          >
+                        </div>
+                        <div class="mt-2 flex justify-between text-xs text-gray-500">
+                          <span :class="tagFeedback ? 'text-red-500' : 'text-gray-500'">
+                            {{ tagFeedback || `可再新增 ${remainingTags} 個標籤` }}
+                          </span>
+                          <span>已新增 {{ form.tags.length }} / {{ tagLimit }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="space-y-6">
+                    <div>
+                      <h2 class="text-lg font-semibold text-gray-900">票價設定</h2>
+                      <p class="text-sm text-gray-500 mt-1">設定報名費用的幣別與金額。</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label for="currency" class="block text-sm font-medium text-gray-700">幣別</label>
+                        <select
+                          id="currency"
+                          v-model="form.currency"
+                          :class="[baseInputClass, fieldErrors.currency ? errorInputClass : normalInputClass]"
+                        >
+                          <option value="" disabled>請選擇幣別</option>
+                          <option v-for="currency in currencyOptions" :key="currency" :value="currency">{{ currency }}</option>
+                        </select>
+                        <p v-if="fieldErrors.currency" class="mt-1 text-sm text-red-500">{{ fieldErrors.currency }}</p>
+                      </div>
+
+                      <div>
+                        <label for="price" class="block text-sm font-medium text-gray-700">票價</label>
+                        <div class="relative">
+                          <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-sm text-gray-400">
+                            {{ form.currency || '幣別' }}
+                          </div>
+                          <input
+                            id="price"
+                            v-model="form.priceAmount"
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            :class="[baseInputClass, fieldErrors.priceAmount ? errorInputClass : normalInputClass, 'pl-20']"
+                            placeholder="請輸入票價"
+                          >
+                        </div>
+                        <p v-if="fieldErrors.priceAmount" class="mt-1 text-sm text-red-500">{{ fieldErrors.priceAmount }}</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </section>
 
-              <div class="flex justify-end">
-                <button type="submit" class="inline-flex items-center px-6 py-3 rounded-xl bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition">
-                  送出申請草稿
-                </button>
-              </div>
+                <div class="flex justify-end pt-4">
+                  <button type="submit" class="inline-flex items-center px-6 py-3 rounded-xl bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition">
+                    送出申請草稿
+                  </button>
+                </div>
+              </section>
             </form>
           </div>
 
@@ -673,3 +895,51 @@ onMounted(loadCityData)
     </main>
   </div>
 </template>
+
+<style scoped>
+:deep(.rich-editor .ql-editor) {
+  min-height: 320px;
+  padding: 1.25rem;
+}
+
+:deep(.rich-editor .ql-container) {
+  border: none;
+}
+
+:deep(.rich-editor .ql-toolbar) {
+  border: none;
+  border-bottom: 1px solid rgba(229, 231, 235, 0.9);
+  padding: 0.75rem 1rem;
+}
+
+:deep(.rich-editor .ql-editor.ql-blank::before) {
+  color: #9ca3af;
+}
+
+:deep(.dp-input) {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  color: #1f2937;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+:deep(.dp-input:focus),
+:deep(.dp-input.dp-input-focus) {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+}
+
+:deep(.dp-input-error) {
+  border-color: #fca5a5 !important;
+  box-shadow: 0 0 0 4px rgba(248, 113, 113, 0.15);
+}
+
+:deep(.dp__menu) {
+  border-radius: 1rem;
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.12);
+  border: 1px solid rgba(229, 231, 235, 0.85);
+}
+</style>
