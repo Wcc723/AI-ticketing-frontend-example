@@ -44,7 +44,21 @@ const startDate = ref(null)
 const endDate = ref(null)
 const startTime = ref('')
 const endTime = ref('')
+const startHour = ref('')
+const startMinute = ref('')
+const endHour = ref('')
+const endMinute = ref('')
+const hourOptions = Array.from({ length: 24 }, (_, index) => pad(index))
+const minuteOptions = Array.from({ length: 12 }, (_, index) => pad(index * 5))
 let syncingSchedule = false
+
+const datePickerUi = {
+  menu: 'athlex-dp-menu',
+  calendar: 'athlex-dp-calendar',
+  calendarCell: 'athlex-dp-cell',
+  navBtnPrev: 'athlex-dp-nav',
+  navBtnNext: 'athlex-dp-nav',
+}
 
 function pad(value) {
   return `${value}`.padStart(2, '0')
@@ -196,6 +210,16 @@ watch([endDate, endTime], ([dateValue, timeValue]) => {
   }
 }, { immediate: true })
 
+watch([startHour, startMinute], ([hour, minute]) => {
+  if (syncingSchedule) return
+  startTime.value = hour && minute ? `${hour}:${minute}` : ''
+}, { immediate: true })
+
+watch([endHour, endMinute], ([hour, minute]) => {
+  if (syncingSchedule) return
+  endTime.value = hour && minute ? `${hour}:${minute}` : ''
+}, { immediate: true })
+
 function addTag() {
   const value = newTag.value.trim()
   if (!value) {
@@ -259,9 +283,45 @@ function syncPickersFromSchedule() {
   const { date: endDateValue, time: endTimeValue } = parseLocalDateTime(form.schedule.end)
   startDate.value = startDateValue
   startTime.value = startTimeValue
+  startHour.value = startTimeValue ? startTimeValue.split(':')[0] : ''
+  startMinute.value = startTimeValue ? startTimeValue.split(':')[1] : ''
   endDate.value = endDateValue
   endTime.value = endTimeValue
+  endHour.value = endTimeValue ? endTimeValue.split(':')[0] : ''
+  endMinute.value = endTimeValue ? endTimeValue.split(':')[1] : ''
   syncingSchedule = false
+}
+
+function handlePriceInput(event) {
+  let value = event.target.value.replace(/[^0-9.]/g, '')
+  const firstDot = value.indexOf('.')
+  if (firstDot !== -1) {
+    value = value.slice(0, firstDot + 1) + value.slice(firstDot + 1).replace(/\./g, '')
+  }
+
+  let [integerPart, decimalPart] = value.split('.')
+
+  if (value.startsWith('.')) {
+    integerPart = '0'
+  }
+
+  if (integerPart) {
+    integerPart = integerPart.replace(/^0+(?=\d)/, '') || '0'
+  }
+
+  let formatted = integerPart || ''
+
+  if (decimalPart !== undefined) {
+    decimalPart = decimalPart.slice(0, 2)
+    formatted = decimalPart.length ? `${formatted}.${decimalPart}` : `${formatted}.`
+  }
+
+  form.priceAmount = formatted
+  event.target.value = formatted
+
+  if (fieldErrors.priceAmount && formatted) {
+    fieldErrors.priceAmount = ''
+  }
 }
 
 function resetFieldErrors() {
@@ -476,7 +536,7 @@ onMounted(() => {
                     </div>
                     <div class="grid grid-cols-1 gap-6">
                       <div>
-                        <label for="title" class="block text-sm font-medium text-gray-700">活動標題</label>
+                        <label for="title" class="block text-sm font-medium text-gray-700">活動標題 <span class="text-red-500">*</span></label>
                         <input
                           id="title"
                           v-model="form.title"
@@ -488,7 +548,7 @@ onMounted(() => {
                       </div>
 
                       <div>
-                        <label for="subtitle" class="block text-sm font-medium text-gray-700">副標題</label>
+                        <label for="subtitle" class="block text-sm font-medium text-gray-700">副標題 <span class="text-red-500">*</span></label>
                         <input
                           id="subtitle"
                           v-model="form.subtitle"
@@ -508,7 +568,7 @@ onMounted(() => {
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label for="city" class="block text-sm font-medium text-gray-700">縣市</label>
+                        <label for="city" class="block text-sm font-medium text-gray-700">縣市 <span class="text-red-500">*</span></label>
                         <select
                           id="city"
                           v-model="form.location.city"
@@ -521,7 +581,7 @@ onMounted(() => {
                       </div>
 
                       <div>
-                        <label for="district" class="block text-sm font-medium text-gray-700">行政區</label>
+                        <label for="district" class="block text-sm font-medium text-gray-700">行政區 <span class="text-red-500">*</span></label>
                         <select
                           id="district"
                           v-model="form.location.district"
@@ -537,7 +597,7 @@ onMounted(() => {
 
                     <div class="grid grid-cols-1 gap-6">
                       <div>
-                        <label for="address" class="block text-sm font-medium text-gray-700">詳細地址</label>
+                        <label for="address" class="block text-sm font-medium text-gray-700">詳細地址 <span class="text-red-500">*</span></label>
                         <input
                           id="address"
                           v-model="form.location.address"
@@ -566,12 +626,12 @@ onMounted(() => {
                       <h2 class="text-lg font-semibold text-gray-900">活動時間</h2>
                       <p class="text-sm text-gray-500 mt-1">分別選擇日期與時間，系統會自動組合完整時段。</p>
                     </div>
-                    <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-                      <div class="space-y-4">
-                        <p class="text-sm font-semibold text-gray-700">開始</p>
+                    <div class="space-y-6">
+                      <div class="space-y-4 bg-white/60 border border-gray-200 rounded-xl p-4 shadow-sm">
+                        <p class="text-sm font-semibold text-gray-700">開始 <span class="text-red-500">*</span></p>
                         <div class="space-y-3">
                           <div>
-                            <label for="start-date" class="block text-xs font-medium uppercase tracking-wide text-gray-500">日期</label>
+                            <label for="start-date" class="block text-xs font-medium uppercase tracking-wide text-gray-500">日期 <span class="text-red-500">*</span></label>
                             <VueDatePicker
                               id="start-date"
                               v-model="startDate"
@@ -581,38 +641,48 @@ onMounted(() => {
                               locale="zh-TW"
                               auto-apply
                               :teleport="false"
+                              :ui="datePickerUi"
                               placeholder="選擇日期"
                               :input-class="fieldErrors.start ? 'dp-input dp-input-error' : 'dp-input'"
                               :class="fieldErrors.start ? 'ring-2 ring-red-200 rounded-xl' : ''"
                             />
                           </div>
                           <div>
-                            <label for="start-time" class="block text-xs font-medium uppercase tracking-wide text-gray-500">時間</label>
-                            <VueDatePicker
-                              id="start-time"
-                              v-model="startTime"
-                              time-picker
-                              :format="'HH:mm'"
-                              :preview-format="'HH:mm'"
-                              :minutes-increment="5"
-                              locale="zh-TW"
-                              auto-apply
-                              :teleport="false"
-                              :model-type="'format'"
-                              placeholder="選擇時間"
-                              :input-class="fieldErrors.start ? 'dp-input dp-input-error' : 'dp-input'"
-                              :class="fieldErrors.start ? 'ring-2 ring-red-200 rounded-xl' : ''"
-                            />
+                            <label class="block text-xs font-medium uppercase tracking-wide text-gray-500">時間 <span class="text-red-500">*</span></label>
+                            <div class="grid grid-cols-2 gap-3">
+                              <div>
+                                <select
+                                  v-model="startHour"
+                                  :class="[baseInputClass, 'mt-0', fieldErrors.start ? errorInputClass : normalInputClass]"
+                                >
+                                  <option value="">小時</option>
+                                  <option v-for="hour in hourOptions" :key="`start-hour-${hour}`" :value="hour">
+                                    {{ hour }}
+                                  </option>
+                                </select>
+                              </div>
+                              <div>
+                                <select
+                                  v-model="startMinute"
+                                  :class="[baseInputClass, 'mt-0', fieldErrors.start ? errorInputClass : normalInputClass]"
+                                >
+                                  <option value="">分鐘</option>
+                                  <option v-for="minute in minuteOptions" :key="`start-minute-${minute}`" :value="minute">
+                                    {{ minute }}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
                           </div>
                         </div>
                         <p v-if="fieldErrors.start" class="text-sm text-red-500">{{ fieldErrors.start }}</p>
                       </div>
 
-                      <div class="space-y-4">
-                        <p class="text-sm font-semibold text-gray-700">結束</p>
+                      <div class="space-y-4 bg-white/60 border border-gray-200 rounded-xl p-4 shadow-sm">
+                        <p class="text-sm font-semibold text-gray-700">結束 <span class="text-red-500">*</span></p>
                         <div class="space-y-3">
                           <div>
-                            <label for="end-date" class="block text-xs font-medium uppercase tracking-wide text-gray-500">日期</label>
+                            <label for="end-date" class="block text-xs font-medium uppercase tracking-wide text-gray-500">日期 <span class="text-red-500">*</span></label>
                             <VueDatePicker
                               id="end-date"
                               v-model="endDate"
@@ -622,28 +692,38 @@ onMounted(() => {
                               locale="zh-TW"
                               auto-apply
                               :teleport="false"
+                              :ui="datePickerUi"
                               placeholder="選擇日期"
                               :input-class="fieldErrors.end ? 'dp-input dp-input-error' : 'dp-input'"
                               :class="fieldErrors.end ? 'ring-2 ring-red-200 rounded-xl' : ''"
                             />
                           </div>
                           <div>
-                            <label for="end-time" class="block text-xs font-medium uppercase tracking-wide text-gray-500">時間</label>
-                            <VueDatePicker
-                              id="end-time"
-                              v-model="endTime"
-                              time-picker
-                              :format="'HH:mm'"
-                              :preview-format="'HH:mm'"
-                              :minutes-increment="5"
-                              locale="zh-TW"
-                              auto-apply
-                              :teleport="false"
-                              :model-type="'format'"
-                              placeholder="選擇時間"
-                              :input-class="fieldErrors.end ? 'dp-input dp-input-error' : 'dp-input'"
-                              :class="fieldErrors.end ? 'ring-2 ring-red-200 rounded-xl' : ''"
-                            />
+                            <label class="block text-xs font-medium uppercase tracking-wide text-gray-500">時間 <span class="text-red-500">*</span></label>
+                            <div class="grid grid-cols-2 gap-3">
+                              <div>
+                                <select
+                                  v-model="endHour"
+                                  :class="[baseInputClass, 'mt-0', fieldErrors.end ? errorInputClass : normalInputClass]"
+                                >
+                                  <option value="">小時</option>
+                                  <option v-for="hour in hourOptions" :key="`end-hour-${hour}`" :value="hour">
+                                    {{ hour }}
+                                  </option>
+                                </select>
+                              </div>
+                              <div>
+                                <select
+                                  v-model="endMinute"
+                                  :class="[baseInputClass, 'mt-0', fieldErrors.end ? errorInputClass : normalInputClass]"
+                                >
+                                  <option value="">分鐘</option>
+                                  <option v-for="minute in minuteOptions" :key="`end-minute-${minute}`" :value="minute">
+                                    {{ minute }}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
                           </div>
                         </div>
                         <p v-if="fieldErrors.end" class="text-sm text-red-500">{{ fieldErrors.end }}</p>
@@ -654,7 +734,7 @@ onMounted(() => {
                   <div class="space-y-6">
                     <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                       <div>
-                        <h2 class="text-lg font-semibold text-gray-900">活動介紹</h2>
+                        <h2 class="text-lg font-semibold text-gray-900">活動介紹 <span class="text-red-500">*</span></h2>
                         <p class="text-sm text-gray-500 mt-1">分享活動內容、亮點與參與者可期待的體驗。</p>
                       </div>
                       <div class="inline-flex rounded-full border border-gray-200 bg-white p-1 text-xs font-medium shadow-sm">
@@ -670,8 +750,8 @@ onMounted(() => {
                         </button>
                       </div>
                     </div>
-                    <div class="space-y-3">
-                      <div v-if="editorMode === 'visual'" class="rich-editor rounded-xl border border-gray-200 overflow-hidden bg-white" :key="`visual-${visualEditorKey}`">
+                      <div class="space-y-3">
+                        <div v-if="editorMode === 'visual'" class="rich-editor rounded-xl border border-gray-200 overflow-hidden bg-white" :key="`visual-${visualEditorKey}`">
                         <QuillEditor
                           v-model:content="form.description"
                           content-type="html"
@@ -713,7 +793,7 @@ onMounted(() => {
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label for="capacity" class="block text-sm font-medium text-gray-700">總名額</label>
+                        <label for="capacity" class="block text-sm font-medium text-gray-700">總名額 <span class="text-red-500">*</span></label>
                         <input
                           id="capacity"
                           v-model="form.capacityTotal"
@@ -728,7 +808,7 @@ onMounted(() => {
                       </div>
 
                       <div>
-                        <label for="status" class="block text-sm font-medium text-gray-700">活動狀態</label>
+                        <label for="status" class="block text-sm font-medium text-gray-700">活動狀態 <span class="text-red-500">*</span></label>
                         <select
                           id="status"
                           v-model="form.status"
@@ -785,7 +865,7 @@ onMounted(() => {
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label for="currency" class="block text-sm font-medium text-gray-700">幣別</label>
+                        <label for="currency" class="block text-sm font-medium text-gray-700">幣別 <span class="text-red-500">*</span></label>
                         <select
                           id="currency"
                           v-model="form.currency"
@@ -798,19 +878,19 @@ onMounted(() => {
                       </div>
 
                       <div>
-                        <label for="price" class="block text-sm font-medium text-gray-700">票價</label>
+                        <label for="price" class="block text-sm font-medium text-gray-700">票價 <span class="text-red-500">*</span></label>
                         <div class="relative">
                           <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-sm text-gray-400">
                             {{ form.currency || '幣別' }}
                           </div>
                           <input
                             id="price"
-                            v-model="form.priceAmount"
-                            type="number"
-                            min="0"
-                            step="0.01"
+                            :value="form.priceAmount"
+                            type="text"
+                            inputmode="decimal"
                             :class="[baseInputClass, fieldErrors.priceAmount ? errorInputClass : normalInputClass, 'pl-20']"
                             placeholder="請輸入票價"
+                            @input="handlePriceInput"
                           >
                         </div>
                         <p v-if="fieldErrors.priceAmount" class="mt-1 text-sm text-red-500">{{ fieldErrors.priceAmount }}</p>
@@ -820,9 +900,9 @@ onMounted(() => {
                 </div>
 
                 <div class="flex justify-end pt-4">
-                  <button type="submit" class="inline-flex items-center px-6 py-3 rounded-xl bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition">
-                    送出申請草稿
-                  </button>
+                <button type="submit" class="inline-flex items-center px-6 py-3 rounded-xl bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition cursor-pointer">
+                  送出申請草稿
+                </button>
                 </div>
               </section>
             </form>
@@ -937,9 +1017,160 @@ onMounted(() => {
   box-shadow: 0 0 0 4px rgba(248, 113, 113, 0.15);
 }
 
-:deep(.dp__menu) {
+:deep(.athlex-dp-menu) {
   border-radius: 1rem;
-  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.12);
-  border: 1px solid rgba(229, 231, 235, 0.85);
+  border: 1px solid rgba(99, 102, 241, 0.08);
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.12);
+  padding: 1rem 1rem 1.25rem;
+}
+
+:deep(.athlex-dp-menu .dp__menu_header) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(99, 102, 241, 0.08);
+}
+
+:deep(.athlex-dp-nav.dp__btn) {
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 0.85rem;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(129, 140, 248, 0.18) 100%);
+  color: #4338ca;
+  box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.18);
+  transition: all 0.18s ease;
+}
+
+:deep(.athlex-dp-nav.dp__btn:hover) {
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.22) 0%, rgba(129, 140, 248, 0.32) 100%);
+  box-shadow: 0 8px 16px rgba(99, 102, 241, 0.22);
+  color: #312e81;
+}
+
+:deep(.athlex-dp-nav.dp__btn .dp__btn_inner) {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+:deep(.athlex-dp-nav .dp__inner_nav) {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: transparent;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: inherit;
+}
+
+:deep(.athlex-dp-nav .dp__inner_nav:hover) {
+  background: transparent;
+}
+
+:deep(.athlex-dp-nav.dp__btn svg) {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+:deep(.athlex-dp-menu .dp__month_year_select) {
+  font-weight: 600;
+  color: #1e1b4b;
+  font-size: 0.95rem;
+}
+
+:deep(.athlex-dp-menu .dp__calendar_header) {
+  color: #6366f1;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+:deep(.athlex-dp-calendar .dp__calendar_row) {
+  gap: 0.35rem;
+}
+
+:deep(.athlex-dp-cell .dp__cell_inner) {
+  border-radius: 0.9rem;
+  padding: 0.65rem 0.5rem;
+  font-weight: 500;
+  color: #1f2937;
+  transition: all 0.18s ease;
+}
+
+:deep(.athlex-dp-cell .dp__cell_inner:hover) {
+  background: rgba(99, 102, 241, 0.12);
+  color: #312e81;
+}
+
+:deep(.athlex-dp-cell .dp__cell_inner.dp__today) {
+  box-shadow: inset 0 0 0 2px rgba(99, 102, 241, 0.3);
+  color: #4338ca;
+}
+
+:deep(.athlex-dp-cell .dp__cell_inner.dp__active_date) {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: #ffffff !important;
+  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.25);
+}
+
+:deep(.athlex-dp-cell .dp__cell_inner.dp__cell_disabled) {
+  color: #cbd5f5 !important;
+  text-decoration: line-through;
+  pointer-events: none;
+}
+
+:deep(.athlex-dp-menu .dp__time_picker) {
+  background: rgba(248, 250, 252, 0.9);
+  border-radius: 0.95rem;
+  padding: 0.9rem 0.85rem;
+  gap: 0.9rem;
+}
+
+:deep(.athlex-dp-menu .dp__time_col) {
+  background: #ffffff;
+  border-radius: 0.85rem;
+  padding: 0.55rem 0.35rem;
+  border: none;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+}
+
+:deep(.athlex-dp-menu .dp__time_col .dp__time_display) {
+  font-weight: 600;
+  color: #1e1b4b;
+  margin-bottom: 0.45rem;
+}
+
+:deep(.athlex-dp-menu .dp__time_col .dp__time_list) {
+  max-height: 165px;
+  padding: 0.25rem 0.3rem;
+}
+
+:deep(.athlex-dp-menu .dp__time_col .dp__time_item) {
+  border-radius: 0.75rem;
+  padding: 0.45rem 0.6rem;
+  font-weight: 500;
+  color: #1f2937;
+  transition: all 0.16s ease;
+}
+
+:deep(.athlex-dp-menu .dp__time_col .dp__time_item:hover) {
+  background: rgba(99, 102, 241, 0.12);
+  color: #312e81;
+}
+
+:deep(.athlex-dp-menu .dp__time_col .dp__time_item.dp__active_time) {
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.2) 0%, rgba(129, 140, 248, 0.32) 100%);
+  color: #312e81;
+  box-shadow: 0 10px 24px rgba(79, 70, 229, 0.18);
 }
 </style>
