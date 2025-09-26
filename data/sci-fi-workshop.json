@@ -1,0 +1,105 @@
+{
+  "id": "sci-fi-hologram-workshop-2024",
+  "title": "未來科技體驗 - 全息投影工作坊",
+  "subtitle": "走進 2045 年的虛擬世界，親手打造屬於你的數位化身",
+  "category": "科技體驗",
+  "type": "未來工作坊",
+  "status": "報名中",
+  "featured": true,
+  "images": {
+    "hero": "/images/sci-fi-workshop-hero.jpg",
+    "gallery": [
+      "/images/hologram-1.jpg",
+      "/images/hologram-2.jpg",
+      "/images/hologram-3.jpg",
+      "/images/hologram-4.jpg"
+    ]
+  },
+  "location": {
+    "venue": "Neo Tokyo 未來實驗室",
+    "address": "台北市信義區信義路五段 7 號 101 樓",
+    "district": "信義區",
+    "description": "位於台北 101 頂樓的未來科技實驗室，擁有 360 度城市景觀",
+    "coordinates": {
+      "lat": 25.0340,
+      "lng": 121.5645
+    }
+  },
+  "pricing": {
+    "originalPrice": 3980,
+    "currentPrice": 2980,
+    "currency": "TWD",
+    "discountPercent": 25,
+    "earlyBirdDeadline": "2024-12-25"
+  },
+  "capacity": {
+    "total": 12,
+    "registered": 8,
+    "remaining": 4
+  },
+  "instructor": {
+    "name": "Dr. Alex Chen 博士",
+    "title": "量子計算與全息技術專家",
+    "experience": "15年未來科技研發經驗",
+    "specialization": "全息投影、量子運算、數位意識轉移",
+    "achievements": [
+      "MIT 量子計算博士",
+      "Tesla 全息部門前首席科學家",
+      "發表超過 50 篇頂級科技論文",
+      "擁有 12 項全息投影專利",
+      "TED 演講觀看次數超過 500 萬"
+    ],
+    "avatar": "/images/dr-alex-chen.jpg",
+    "socialProof": "「Dr. Chen 是當今世界最頂尖的全息技術專家之一」- 《科技評論》雜誌"
+  },
+  "description": "<div class='space-y-6'><div><p class='text-gray-700 leading-relaxed mb-6'>在這個前所未有的科技體驗中，您將踏入 2045 年的未來世界。使用最先進的全息投影技術，親手創造屬於自己的數位化身，體驗虛擬與現實交融的奇妙境界。這不僅是一場工作坊，更是一次穿越時空的科技冒險。</p></div><div class='space-y-3 mb-6'><div class='flex items-start space-x-3 p-3 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-100'><span class='text-lg'>🚀</span><span class='text-gray-700 text-sm'>突破想像：體驗超越現實的全息投影技術</span></div><div class='flex items-start space-x-3 p-3 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-100'><span class='text-lg'>🤖</span><span class='text-gray-700 text-sm'>數位化身：運用 AI 技術創造專屬虛擬分身</span></div><div class='flex items-start space-x-3 p-3 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-100'><span class='text-lg'>🌌</span><span class='text-gray-700 text-sm'>未來空間：在太空艙般的實驗室中探索科技</span></div><div class='flex items-start space-x-3 p-3 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-100'><span class='text-lg'>🎁</span><span class='text-gray-700 text-sm'>珍貴收藏：獲得獨一無二的 NFT 數位資產</span></div><div class='flex items-start space-x-3 p-3 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-100'><span class='text-lg'>👥</span><span class='text-gray-700 text-sm'>菁英聚會：與科技愛好者交流未來趨勢</span></div></div><div class='space-y-4 mb-6'><div class='p-4 bg-gray-50 rounded-lg border-l-4 border-indigo-500'><h3 class='font-semibold text-gray-900 mb-2'>核心技術</h3><p class='text-gray-700'>我們採用最新的量子全息投影技術，結合 AI 深度學習和神經網路演算法，能夠在三維空間中創造出逼真的數位化身。</p></div><div class='p-4 bg-gray-50 rounded-lg border-l-4 border-purple-500'><h3 class='font-semibold text-gray-900 mb-2'>體驗過程</h3><p class='text-gray-700'>整個體驗過程如同科幻電影般震撼。您將穿上特製的量子感應服，戴上神經連結頭盔，在全息投影艙中與自己的數位分身互動。</p></div><div class='p-4 bg-gray-50 rounded-lg border-l-4 border-green-500'><h3 class='font-semibold text-gray-900 mb-2'>創新突破</h3><p class='text-gray-700'>這項技術代表了人類科技發展的最新里程碁。我們將展示如何透過量子糾纏原理實現瞬間數據傳輸。</p></div><div class='p-4 bg-gray-50 rounded-lg border-l-4 border-orange-500'><h3 class='font-semibold text-gray-900 mb-2'>未來展望</h3><p class='text-gray-700'>在不久的將來，這項技術將徹底改變人類的溝通方式、工作模式，甚至是存在形態。</p></div></div><div class='grid grid-cols-1 md:grid-cols-2 gap-4'><div class='p-4 bg-white border border-gray-200 rounded-lg'><h3 class='font-semibold text-gray-900 mb-2'>量子掃描建模</h3><p class='text-gray-600'>使用價值千萬的量子掃描儀，精確捕捉您的三維形體數據，創建高精度數位模型</p></div><div class='p-4 bg-white border border-gray-200 rounded-lg'><h3 class='font-semibold text-gray-900 mb-2'>AI 情感引擎</h3><p class='text-gray-600'>先進的人工智慧系統能夠學習並模擬您的表情、語調和個性特徵</p></div><div class='p-4 bg-white border border-gray-200 rounded-lg'><h3 class='font-semibold text-gray-900 mb-2'>全息互動體驗</h3><p class='text-gray-600'>在 360 度全息環境中與您的數位化身進行實時互動對話</p></div><div class='p-4 bg-white border border-gray-200 rounded-lg'><h3 class='font-semibold text-gray-900 mb-2'>NFT 永久收藏</h3><p class='text-gray-600'>您的數位化身將被鑄造成獨特的 NFT，永久保存在區塊鏈上</p></div></div></div>",
+  "requirements": "<div class='bg-yellow-50 border border-yellow-200 rounded-lg p-4'><h3 class='font-semibold text-gray-900 mb-3'>參與須知</h3><ul class='space-y-2 text-gray-700'><li>• 年齡限制：18 歲以上（涉及先進科技設備）</li><li>• 身體狀況：無心臟病史、無癲癇病史</li><li>• 建議穿著：深色緊身衣物（提升掃描精度）</li><li>• 必備文件：請攜帶有效身份證件（實驗室安全管制）</li><li>• 到達時間：建議提前 1 小時到達進行設備校準</li></ul></div>",
+  "reviews": [
+    {
+      "id": 1,
+      "author": "TechGuru_2024",
+      "rating": 5,
+      "date": "2024-11-20",
+      "content": "完全超乎想像！看到自己的全息化身真的很震撼，感覺像是踏入了未來世界。Dr. Chen 的講解非常專業，讓我對科技的未來充滿期待！"
+    },
+    {
+      "id": 2,
+      "author": "QuantumExplorer",
+      "rating": 5,
+      "date": "2024-11-15",
+      "content": "這是我參加過最酷的科技體驗！全息投影的精細度令人驚嘆，而且還能帶走 NFT 作為紀念。絕對值得推薦給所有科技愛好者！"
+    },
+    {
+      "id": 3,
+      "author": "FutureSeeker",
+      "rating": 4,
+      "date": "2024-11-10",
+      "content": "實驗室的環境超棒，101 樓的景觀配上未來科技設備，真的有種身處 2045 年的感覺。唯一小建議是希望體驗時間能再長一些。"
+    }
+  ],
+  "tags": ["科技", "AI", "VR", "NFT", "未來"],
+  "organizer": {
+    "name": "AthleX 未來科技事業部",
+    "contact": {
+      "phone": "02-8101-0101",
+      "email": "future@athlex.com",
+      "website": "https://future.athlex.com"
+    },
+    "socialMedia": {
+      "facebook": "@AthleXFuture",
+      "instagram": "@athlex_future_tech"
+    }
+  },
+  "policies": {
+    "cancellation": "活動前 7 天可免費取消，3-7 天內取消收取 50% 手續費，3 天內恕不退費",
+    "refund": "如因技術設備故障導致活動取消，將全額退費並提供未來體驗券",
+    "transfer": "可於活動前 5 天申請轉讓名額（需重新進行安全審核）",
+    "safety": "所有設備均符合國際安全標準，並有專業技術人員全程監控"
+  },
+  "faq": "<div class='space-y-4'><div class='bg-white border border-gray-200 rounded-lg'><div class='p-4 border-b border-gray-200'><h3 class='font-semibold text-gray-900'>如何取消或變更預訂？</h3></div><div class='p-4'><p class='text-gray-700'>您可以在活動開始前 7 天內免費取消預訂。當天取消需支付 50% 手續費。若需變更參加者資訊，請至少提前 3 天聯絡我們。</p></div></div><div class='bg-white border border-gray-200 rounded-lg'><div class='p-4 border-b border-gray-200'><h3 class='font-semibold text-gray-900'>活動是否適合初學者？</h3></div><div class='p-4'><p class='text-gray-700'>當然！我們的活動設計適合各種經驗程度的參與者。我們的專業指導員會全程協助，確保每位參與者都能安全且愉快地完成體驗。</p></div></div><div class='bg-white border border-gray-200 rounded-lg'><div class='p-4 border-b border-gray-200'><h3 class='font-semibold text-gray-900'>如果天氣不佳會影響活動嗎？</h3></div><div class='p-4'><p class='text-gray-700'>我們所有的活動都在室內進行，天氣狀況不會影響活動進行。但如果遇到極端天氣狀況（如颱風、地震），我們會優先考慮參與者安全並視情況調整。</p></div></div><div class='bg-white border border-gray-200 rounded-lg'><div class='p-4 border-b border-gray-200'><h3 class='font-semibold text-gray-900'>是否提供組團優惠？</h3></div><div class='p-4'><p class='text-gray-700'>5 人（含）以上團體可享有 9 折優惠，10 人（含）以上可享有 8.5 折優惠。組團報名請事先聯絡我們的客服人員安排。</p></div></div><div class='bg-white border border-gray-200 rounded-lg'><div class='p-4 border-b border-gray-200'><h3 class='font-semibold text-gray-900'>活動結束後是否有證書？</h3></div><div class='p-4'><p class='text-gray-700'>是的！所有完成活動的參與者都會獲得一份參與證明。此外，部分活動還會提供技能證明或專業證書，詳情請參考各活動的具體說明。</p></div></div></div>",
+  "relatedEvents": [
+    "ai-robot-workshop-2024",
+    "metaverse-creation-2024",
+    "quantum-computing-basics-2024"
+  ]
+}

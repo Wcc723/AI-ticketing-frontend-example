@@ -1,0 +1,178 @@
+{
+  "id": "leather-workshop-2024",
+  "title": "皮革手作體驗 - 復古皮夾製作",
+  "subtitle": "探索傳統工藝的魅力，親手打造專屬皮革小物",
+  "category": "手作體驗",
+  "type": "工作坊",
+  "status": "報名中",
+  "featured": true,
+  "images": {
+    "hero": "/images/leather-workshop-hero.jpg",
+    "gallery": [
+      "/images/leather-workshop-1.jpg",
+      "/images/leather-workshop-2.jpg",
+      "/images/leather-workshop-3.jpg",
+      "/images/leather-workshop-4.jpg"
+    ]
+  },
+  "schedule": {
+    "date": "2024-12-28",
+    "time": "14:00-17:00",
+    "duration": "3小時",
+    "sessions": [
+      {
+        "time": "14:00-14:30",
+        "activity": "報到及工具介紹"
+      },
+      {
+        "time": "14:30-15:30",
+        "activity": "皮革基礎知識與技法教學"
+      },
+      {
+        "time": "15:30-15:45",
+        "activity": "茶點時間"
+      },
+      {
+        "time": "15:45-16:45",
+        "activity": "親手製作皮夾實作"
+      },
+      {
+        "time": "16:45-17:00",
+        "activity": "作品分享與合照"
+      }
+    ]
+  },
+  "location": {
+    "venue": "匠心工藝坊",
+    "address": "台北市大安區復興南路一段 123 號 2F",
+    "district": "大安區",
+    "transportation": [
+      "捷運大安站 1 號出口步行 3 分鐘",
+      "公車復興南路口站下車即達",
+      "附近有收費停車場"
+    ],
+    "coordinates": {
+      "lat": 25.0330,
+      "lng": 121.5654
+    }
+  },
+  "pricing": {
+    "originalPrice": 1980,
+    "currentPrice": 1580,
+    "currency": "TWD",
+    "discountPercent": 20,
+    "earlyBirdDeadline": "2024-12-20",
+    "included": [
+      "所有製作材料（義大利進口牛皮）",
+      "專業工具使用",
+      "專業導師指導",
+      "精美包裝袋",
+      "茶點招待"
+    ]
+  },
+  "capacity": {
+    "total": 20,
+    "registered": 14,
+    "remaining": 6
+  },
+  "instructor": {
+    "name": "林志明 師傅",
+    "title": "資深皮革工藝師",
+    "experience": "25年皮革工藝經驗",
+    "specialization": "手工皮具設計與製作",
+    "achievements": [
+      "台灣工藝之家認證工藝師",
+      "多次獲得文化部工藝獎項",
+      "作品曾於國際工藝展覽展出"
+    ],
+    "avatar": "/images/instructor-avatar.jpg"
+  },
+  "description": {
+    "brief": "在這個快節奏的時代，讓我們慢下來，用雙手感受皮革的溫度與質感。本次工作坊將帶領您從零開始，學習傳統皮革工藝技法，製作一個獨一無二的復古皮夾。",
+    "highlights": [
+      "🎯 零基礎友善：不需任何經驗，從基礎開始教學",
+      "🏆 專業指導：資深工藝師一對一指導技巧",
+      "🎁 成品帶回：當天完成專屬皮夾並包裝帶回",
+      "☕ 舒適環境：溫馨工作室配有茶點招待",
+      "📸 記錄時光：提供拍照留念服務"
+    ],
+    "details": "本工作坊採用義大利進口優質牛皮，教授傳統手縫技法，包含裁切、打孔、縫製、修邊等完整流程。每位學員都能製作出一個實用且具個人特色的皮夾，適合自用或作為特別的禮物。課程中會介紹皮革的基本知識、工具使用方法，以及保養技巧，讓您對皮革工藝有全面的認識。"
+  },
+  "requirements": [
+    "年齡限制：16歲以上",
+    "建議穿著不怕髒污的衣物",
+    "請攜帶個人水杯",
+    "現場提供圍裙及手套"
+  ],
+  "materials": {
+    "leather": "義大利進口植鞣牛皮",
+    "thread": "德國進口蠟線",
+    "hardware": "日本製黃銅五金",
+    "tools": "專業皮革工具組"
+  },
+  "reviews": [
+    {
+      "id": 1,
+      "author": "王小華",
+      "rating": 5,
+      "date": "2024-11-15",
+      "content": "老師非常有耐心，教學很仔細！第一次做皮革工藝就成功完成了一個漂亮的皮夾，超有成就感的！"
+    },
+    {
+      "id": 2,
+      "author": "李大明",
+      "rating": 5,
+      "date": "2024-11-10",
+      "content": "工作室環境很棒，材料品質很好。老師的技術真的很厲害，學到很多專業知識。"
+    },
+    {
+      "id": 3,
+      "author": "張美麗",
+      "rating": 4,
+      "date": "2024-11-05",
+      "content": "很有趣的體驗課程，適合想要嘗試手作的朋友。製作過程很療癒，完成品也很實用。"
+    }
+  ],
+  "tags": ["手作", "皮革", "工藝", "體驗", "禮物", "療癒", "文創"],
+  "organizer": {
+    "name": "AthleX 生活體驗",
+    "contact": {
+      "phone": "02-2345-6789",
+      "email": "events@athlex.com",
+      "website": "https://athlex.com/events"
+    },
+    "socialMedia": {
+      "facebook": "@AthlexLifestyle",
+      "instagram": "@athlex_experience"
+    }
+  },
+  "policies": {
+    "cancellation": "活動前 7 天可免費取消，3-7 天內取消收取 30% 手續費，3 天內恕不退費",
+    "refund": "如因主辦方因素取消活動，將全額退費",
+    "transfer": "可於活動前 3 天申請轉讓名額",
+    "weather": "室內活動不受天氣影響"
+  },
+  "faq": [
+    {
+      "question": "完全沒有經驗可以參加嗎？",
+      "answer": "當然可以！本課程專為初學者設計，從基礎開始教學，老師會一步步指導每個細節。"
+    },
+    {
+      "question": "製作的皮夾可以客製化嗎？",
+      "answer": "可以選擇皮革顏色（黑色、棕色、咖啡色），也可以在皮夾上燙印個人姓名縮寫。"
+    },
+    {
+      "question": "需要自備什麼東西嗎？",
+      "answer": "不需要！所有材料和工具都會提供，建議穿著不怕髒的衣物即可。"
+    },
+    {
+      "question": "可以帶朋友一起參加嗎？",
+      "answer": "歡迎！這是很好的親友共同體驗活動，但請記得為每位參加者分別報名。"
+    }
+  ],
+  "relatedEvents": [
+    "ceramic-workshop-2024",
+    "woodworking-basics-2024",
+    "jewelry-making-2024"
+  ]
+}
