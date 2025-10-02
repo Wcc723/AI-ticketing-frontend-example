@@ -7,7 +7,7 @@ const activeTab = ref('info')
 
 async function loadEvent() {
   try {
-    const res = await fetch('/data/sci-fi-workshop.json')
+    const res = await fetch('./data/sci-fi-workshop.json')
     event.value = await res.json()
     loading.value = false
   } catch (error) {

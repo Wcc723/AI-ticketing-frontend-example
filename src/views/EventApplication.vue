@@ -457,7 +457,7 @@ function handleSubmit() {
 
 async function loadCityData() {
   try {
-    const response = await fetch('/data/taiwan-city-districts.json')
+    const response = await fetch('./data/taiwan-city-districts.json')
     if (!response.ok) throw new Error('Network response was not ok')
     const data = await response.json()
     cityOptions.value = Array.isArray(data) ? data : []
