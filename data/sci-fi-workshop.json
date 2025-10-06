@@ -15,6 +15,14 @@
       "/images/hologram-4.jpg"
     ]
   },
+  "schedule": {
+    "startDate": "2025-12-25",
+    "startHour": "10",
+    "startMinute": "00",
+    "endDate": "2025-12-25",
+    "endHour": "18",
+    "endMinute": "00"
+  },
   "location": {
     "venue": "Neo Tokyo 未來實驗室",
     "address": "台北市信義區信義路五段 7 號 101 樓",
@@ -23,7 +31,9 @@
     "coordinates": {
       "lat": 25.0340,
       "lng": 121.5645
-    }
+    },
+    "transportation": "<ul class='space-y-1'><li>• 捷運：台北 101/世貿站 2 號出口</li><li>• 公車：多條路線可達信義商圈</li><li>• 停車：台北 101 地下停車場</li></ul>",
+    "specialFeatures": "<ul class='space-y-1'><li>• 全景觀景窗俯瞰台北市</li><li>• 無塵室等級科技實驗室</li><li>• 配備最先進的全息投影設備</li></ul>"
   },
   "pricing": {
     "originalPrice": 3980,
