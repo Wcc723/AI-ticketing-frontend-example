@@ -43,8 +43,8 @@ const discountDeadline = computed(() => {
 })
 
 const eventDate = computed(() => {
-  if (!event.value?.schedule?.date) return ''
-  const date = new Date(event.value.schedule.date)
+  if (!event.value?.schedule?.startDate) return ''
+  const date = new Date(event.value.schedule.startDate)
   return date.toLocaleDateString('zh-TW', {
     year: 'numeric',
     month: 'long',
@@ -169,6 +169,14 @@ const isFull = computed(() => event.value?.capacity?.remaining <= 0)
               {{ event.subtitle }}
             </p>
 
+            <!-- Tags 標籤 -->
+            <div v-if="event.tags && event.tags.length" class="flex flex-wrap gap-2 mt-4">
+              <span v-for="tag in event.tags" :key="tag"
+                    class="px-3 py-1 bg-white/60 text-gray-700 text-xs font-medium rounded-full border border-gray-300 backdrop-blur-sm hover:bg-white/80 transition-colors">
+                #{{ tag }}
+              </span>
+            </div>
+
             <!-- 快速資訊 -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
               <div class="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-sm border border-gray-200">
@@ -179,7 +187,9 @@ const isFull = computed(() => event.value?.capacity?.remaining <= 0)
                   <span class="text-sm text-gray-600">活動時間</span>
                 </div>
                 <div class="font-semibold text-gray-900">{{ eventDate }}</div>
-                <div class="text-sm text-gray-600">全日體驗 (10:00-18:00)</div>
+                <div v-if="event.schedule" class="text-sm text-gray-600">
+                  {{ event.schedule.startHour }}:{{ event.schedule.startMinute }} - {{ event.schedule.endHour }}:{{ event.schedule.endMinute }}
+                </div>
               </div>
 
               <div class="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-sm border border-gray-200">
